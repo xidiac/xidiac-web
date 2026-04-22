@@ -34,7 +34,7 @@
     inset: 0;
     background: var(--carbon);
     z-index: 1000;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -51,7 +51,7 @@
     animation: fadeUp 1s ease both;
     display: flex;
     justify-content: center;
-    margin-top: 60px;
+    margin-top: 100px;
   }
 
   .gate-title {
@@ -850,10 +850,12 @@
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   }
 
-  if (sessionStorage.getItem('xidiac_unlocked') === 'true') {
+ if (sessionStorage.getItem('xidiac_unlocked') === 'true') {
     gate.style.display = 'none';
     site.classList.add('visible');
     initReveal();
+  } else {
+    gate.style.display = 'flex';
   }
 
   // ─── NODES ───
