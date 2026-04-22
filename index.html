@@ -51,7 +51,7 @@
     animation: fadeUp 1s ease both;
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 60px;
   }
 
   .gate-title {
@@ -823,13 +823,14 @@
   const pwErr   = document.getElementById('pwErr');
 
   function tryUnlock() {
-    if (pwInput.value.trim().toLowerCase() === PASS) {
-      gate.classList.add('unlocking');
-      setTimeout(() => {
-        gate.style.display = 'none';
-        site.classList.add('visible');
-        initReveal();
-      }, 820);
+  if (pwInput.value.trim().toLowerCase() === PASS) {
+    sessionStorage.setItem('xidiac_unlocked', 'true');
+    gate.classList.add('unlocking');
+    setTimeout(() => {
+      gate.style.display = 'none';
+      site.classList.add('visible');
+      initReveal();
+    }, 820);
     } else {
       pwErr.classList.add('show');
       pwInput.value = '';
@@ -847,6 +848,12 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  }
+
+  if (sessionStorage.getItem('xidiac_unlocked') === 'true') {
+    gate.style.display = 'none';
+    site.classList.add('visible');
+    initReveal();
   }
 
   // ─── NODES ───
