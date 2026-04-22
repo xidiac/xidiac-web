@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Work — XIDIAC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--snow:#F8F7F5;--linen:#E9E3D5;--bronze:#C59540;--red:#A31E21;--bordeaux:#620A1A;--carbon:#1D1D1D;--mid:#2a2a2a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--carbon);color:var(--linen);font-family:'Libre Baskerville',serif;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:24px 60px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(29,29,29,0.97),transparent);}
+.nav-logo{font-family:'Cinzel',serif;font-size:18px;font-weight:900;letter-spacing:0.3em;color:var(--snow);text-decoration:none;}
+.nav-logo span{color:var(--bronze);}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(233,227,213,0.5);text-decoration:none;transition:color 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--bronze);}
+
+/* PAGE HERO */
+.page-hero{min-height:50vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--linen);padding:140px 60px 80px;text-align:center;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 60%,rgba(98,10,26,0.06) 0%,transparent 70%);}
+.hero-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.5em;color:var(--bronze);text-transform:uppercase;margin-bottom:24px;opacity:0;animation:fadeUp 1s 0.2s ease forwards;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(52px,9vw,110px);color:var(--bordeaux);line-height:0.95;opacity:0;animation:fadeUp 1s 0.35s ease forwards;position:relative;z-index:1;}
+.hero-divider{width:80px;height:1px;background:var(--bronze);margin:40px auto 0;opacity:0;animation:fadeUp 1s 0.5s ease forwards;}
+
+/* ── SECTION 1: PRESENTATIONS ── */
+.pres-section{background:var(--carbon);padding:120px 60px;}
+.pres-inner{max-width:1200px;margin:0 auto;}
+.sec-header{margin-bottom:64px;}
+.sec-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.5em;color:var(--bronze);text-transform:uppercase;margin-bottom:16px;display:block;}
+.sec-title{font-family:'Cinzel',serif;font-size:clamp(24px,4vw,42px);font-weight:700;letter-spacing:0.08em;color:var(--snow);}
+.sec-title span{color:var(--bronze);}
+
+.pres-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;}
+
+.pres-card{
+  background:var(--mid);border:1px solid rgba(197,149,64,0.08);
+  padding:0;overflow:hidden;
+  opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;
+}
+.pres-card.in{opacity:1;transform:translateY(0);}
+
+.pc-top{padding:40px 40px 32px;border-bottom:1px solid rgba(197,149,64,0.1);}
+.pc-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.pc-tag{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.3em;color:var(--bronze);text-transform:uppercase;}
+.pc-status{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.25em;padding:4px 12px;border:1px solid;}
+.pc-status.in-progress{color:var(--bronze);border-color:rgba(197,149,64,0.3);}
+.pc-status.complete{color:#4caf7d;border-color:rgba(76,175,125,0.3);}
+.pc-status.upcoming{color:rgba(233,227,213,0.3);border-color:rgba(233,227,213,0.1);}
+.pc-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--snow);line-height:1.25;margin-bottom:12px;}
+.pc-desc{font-size:14px;line-height:1.75;color:rgba(233,227,213,0.5);}
+
+/* 3-part series */
+.pc-series{padding:0;}
+.series-part{
+  display:flex;align-items:flex-start;gap:24px;padding:20px 40px;
+  border-bottom:1px solid rgba(197,149,64,0.07);transition:background 0.25s;
+}
+.series-part:last-child{border-bottom:none;}
+.series-part:hover{background:rgba(197,149,64,0.04);}
+.sp-indicator{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-size:9px;font-weight:700;
+  margin-top:2px;
+}
+.sp-indicator.done{background:rgba(76,175,125,0.15);color:#4caf7d;border:1px solid rgba(76,175,125,0.3);}
+.sp-indicator.active{background:rgba(197,149,64,0.15);color:var(--bronze);border:1px solid rgba(197,149,64,0.4);}
+.sp-indicator.pending{background:transparent;color:rgba(233,227,213,0.2);border:1px solid rgba(233,227,213,0.1);}
+.sp-info{}
+.sp-part-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.25em;color:rgba(197,149,64,0.6);text-transform:uppercase;margin-bottom:4px;}
+.sp-part-title{font-size:14px;color:rgba(233,227,213,0.7);line-height:1.4;}
+.sp-part-date{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.15em;color:rgba(197,149,64,0.35);margin-top:4px;}
+
+/* ── SECTION 2: FUNDRAISER ── */
+.fund-section{background:var(--linen);padding:120px 60px;}
+.fund-inner{max-width:1200px;margin:0 auto;}
+
+.tracker-block{background:var(--carbon);border:1px solid rgba(197,149,64,0.15);padding:56px;margin-bottom:64px;}
+.tracker-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:32px;}
+.tracker-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.4em;color:var(--bronze);text-transform:uppercase;}
+.tracker-pct{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:var(--snow);line-height:1;}
+.tracker-pct span{font-size:22px;color:rgba(233,227,213,0.4);}
+.tracker-bar-wrap{background:rgba(197,149,64,0.1);height:4px;width:100%;margin-bottom:20px;overflow:hidden;}
+.tracker-bar{height:100%;background:linear-gradient(to right,var(--bordeaux),var(--bronze));width:0;transition:width 1.5s ease;}
+.tracker-meta{display:flex;justify-content:space-between;}
+.tracker-meta span{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;color:rgba(197,149,64,0.5);}
+
+.pitch-block{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.pitch-left{}
+.pitch-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.4em;color:var(--bronze);text-transform:uppercase;margin-bottom:16px;}
+.pitch-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(28px,3vw,42px);color:var(--bordeaux);line-height:1.25;margin-bottom:24px;}
+.pitch-text{font-size:15px;line-height:1.95;color:var(--carbon);opacity:0.75;}
+.pitch-right{}
+.updates-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.4em;color:var(--bronze);text-transform:uppercase;margin-bottom:24px;}
+.update-item{padding:20px 0;border-bottom:1px solid rgba(98,10,26,0.15);}
+.update-item:last-child{border-bottom:none;}
+.update-date{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.25em;color:rgba(98,10,26,0.5);margin-bottom:6px;}
+.update-text{font-size:14px;line-height:1.6;color:var(--carbon);opacity:0.7;}
+.update-text strong{color:var(--bordeaux);}
+
+/* ── SECTION 3: CLASS VIDEO ── */
+.video-section{background:var(--bordeaux);padding:120px 60px;position:relative;overflow:hidden;}
+.video-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 50% 50%,rgba(163,30,33,0.3) 0%,transparent 70%);pointer-events:none;}
+.video-inner{max-width:900px;margin:0 auto;text-align:center;position:relative;z-index:1;}
+.v-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.5em;color:rgba(197,149,64,0.7);text-transform:uppercase;margin-bottom:24px;}
+.v-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(38px,6vw,72px);color:var(--snow);line-height:1.1;margin-bottom:16px;}
+.v-sub{font-family:'Libre Baskerville',serif;font-size:15px;color:rgba(233,227,213,0.5);line-height:1.8;margin-bottom:56px;max-width:560px;margin-left:auto;margin-right:auto;}
+.video-placeholder{
+  background:rgba(29,29,29,0.5);border:1px solid rgba(197,149,64,0.25);
+  aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;position:relative;overflow:hidden;
+}
+.vp-icon{width:72px;height:72px;border-radius:50%;border:1px solid rgba(197,149,64,0.4);display:flex;align-items:center;justify-content:center;}
+.vp-icon::after{content:'▶';font-size:22px;color:rgba(197,149,64,0.4);margin-left:4px;}
+.vp-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.4em;color:rgba(233,227,213,0.25);}
+.vp-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(233,227,213,0.2);}
+.v-date{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;color:rgba(197,149,64,0.5);text-transform:uppercase;margin-top:32px;}
+
+/* FOOTER */
+footer{background:var(--carbon);padding:56px 60px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(197,149,64,0.1);}
+.footer-brand{font-family:'Cinzel',serif;font-size:20px;font-weight:900;letter-spacing:0.3em;color:var(--snow);}
+.footer-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(233,227,213,0.4);margin-top:6px;}
+.footer-motto{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(233,227,213,0.45);text-align:right;max-width:340px;line-height:1.75;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.85s ease,transform 0.85s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  nav{padding:18px 24px;} .nav-links{display:none;}
+  .pres-section,.fund-section,.video-section{padding:80px 24px;}
+  .pres-cards,.pitch-block{grid-template-columns:1fr;}
+  .page-hero{padding:120px 24px 60px;}
+  footer{flex-direction:column;gap:20px;text-align:center;} .footer-motto{text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="xidiac.html" class="nav-logo">XI<span>DIAC</span></a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="our-class.html">Our Class</a></li>
+    <li><a href="our-work.html" class="active">Our Work</a></li>
+    <li><a href="our-impact.html">Our Impact</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <p class="hero-eyebrow">Xi Class · Spring 2026</p>
+  <h1 class="hero-title">Our Work</h1>
+  <div class="hero-divider"></div>
+</div>
+
+<!-- ── SECTION 1: PRESENTATIONS ── -->
+<section class="pres-section">
+  <div class="pres-inner">
+    <div class="sec-header reveal">
+      <span class="sec-eyebrow">Section 01</span>
+      <h2 class="sec-title">Presentations <span>Showcase</span></h2>
+    </div>
+
+    <div class="pres-cards">
+
+      <!-- PRODUCT STRATEGY -->
+      <div class="pres-card" style="transition-delay:0s">
+        <div class="pc-top">
+          <div class="pc-meta">
+            <span class="pc-tag">Product Strategy</span>
+            <span class="pc-status in-progress">In Progress</span>
+          </div>
+          <h3 class="pc-title">Product Strategy Presentation</h3>
+          <p class="pc-desc">Developing a go-to-market product strategy from brief to boardroom. The class's first major collaborative deliverable.</p>
+        </div>
+        <div class="pc-series">
+          <div class="series-part">
+            <div class="sp-indicator done">✓</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 1 — The Brief</div>
+              <div class="sp-part-title">What the challenge is and how the class is approaching it</div>
+              <div class="sp-part-date">Posted April 26</div>
+            </div>
+          </div>
+          <div class="series-part">
+            <div class="sp-indicator active">→</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 2 — Behind the Process</div>
+              <div class="sp-part-title">Working session photos and mid-point progress update</div>
+              <div class="sp-part-date">Week of Apr 26 – May 2</div>
+            </div>
+          </div>
+          <div class="series-part">
+            <div class="sp-indicator pending">3</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 3 — The Reveal</div>
+              <div class="sp-part-title">Key insights and takeaways after presenting</div>
+              <div class="sp-part-date">Week of May 3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FINANCE -->
+      <div class="pres-card" style="transition-delay:0.1s">
+        <div class="pc-top">
+          <div class="pc-meta">
+            <span class="pc-tag">Finance</span>
+            <span class="pc-status upcoming">Upcoming</span>
+          </div>
+          <h3 class="pc-title">Finance Presentation</h3>
+          <p class="pc-desc">Financial modeling, analysis, and storytelling — translating numbers into decisions that drive business forward.</p>
+        </div>
+        <div class="pc-series">
+          <div class="series-part">
+            <div class="sp-indicator pending">1</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 1 — The Brief</div>
+              <div class="sp-part-title">Challenge overview and class approach</div>
+              <div class="sp-part-date">Week of Apr 26</div>
+            </div>
+          </div>
+          <div class="series-part">
+            <div class="sp-indicator pending">2</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 2 — Behind the Process</div>
+              <div class="sp-part-title">Working session photos and progress update</div>
+              <div class="sp-part-date">Week of May 3</div>
+            </div>
+          </div>
+          <div class="series-part">
+            <div class="sp-indicator pending">3</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 3 — The Reveal</div>
+              <div class="sp-part-title">Key insights and takeaways after presenting</div>
+              <div class="sp-part-date">Week of May 10</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STRATEGY CONSULTING -->
+      <div class="pres-card" style="transition-delay:0.2s">
+        <div class="pc-top">
+          <div class="pc-meta">
+            <span class="pc-tag">Strategy Consulting</span>
+            <span class="pc-status upcoming">Upcoming</span>
+          </div>
+          <h3 class="pc-title">Strategy Consulting Presentation</h3>
+          <p class="pc-desc">Diagnosing a real business problem and structuring a consulting recommendation under time pressure.</p>
+        </div>
+        <div class="pc-series">
+          <div class="series-part">
+            <div class="sp-indicator pending">1</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 1 — The Brief</div>
+              <div class="sp-part-title">Challenge overview and class approach</div>
+              <div class="sp-part-date">Week of May 3</div>
+            </div>
+          </div>
+          <div class="series-part">
+            <div class="sp-indicator pending">2</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 2 — Behind the Process</div>
+              <div class="sp-part-title">Working session photos and progress update</div>
+              <div class="sp-part-date">Week of May 10</div>
+            </div>
+          </div>
+          <div class="series-part">
+            <div class="sp-indicator pending">3</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 3 — The Reveal</div>
+              <div class="sp-part-title">Key insights and takeaways after presenting</div>
+              <div class="sp-part-date">Week of May 17</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENTREPRENEURSHIP -->
+      <div class="pres-card" style="transition-delay:0.3s">
+        <div class="pc-top">
+          <div class="pc-meta">
+            <span class="pc-tag">Entrepreneurship</span>
+            <span class="pc-status upcoming">Upcoming</span>
+          </div>
+          <h3 class="pc-title">Entrepreneurship Presentation</h3>
+          <p class="pc-desc">Building and pitching a venture from the ground up — the final and most ambitious presentation of the five-week program.</p>
+        </div>
+        <div class="pc-series">
+          <div class="series-part">
+            <div class="sp-indicator pending">1</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 1 — The Brief</div>
+              <div class="sp-part-title">Challenge overview and class approach</div>
+              <div class="sp-part-date">Week of May 10</div>
+            </div>
+          </div>
+          <div class="series-part">
+            <div class="sp-indicator pending">2</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 2 — Behind the Process</div>
+              <div class="sp-part-title">Working session photos and progress update</div>
+              <div class="sp-part-date">Week of May 17</div>
+            </div>
+          </div>
+          <div class="series-part">
+            <div class="sp-indicator pending">3</div>
+            <div class="sp-info">
+              <div class="sp-part-label">Part 3 — The Reveal</div>
+              <div class="sp-part-title">Key insights and takeaways after presenting</div>
+              <div class="sp-part-date">Week of May 17</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 2: FUNDRAISER ── -->
+<section class="fund-section">
+  <div class="fund-inner">
+    <div class="sec-header reveal">
+      <span class="sec-eyebrow" style="color:var(--bronze)">Section 02</span>
+      <h2 class="sec-title" style="color:var(--bordeaux)">Fundraiser <span>Tracker</span></h2>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="tracker-block reveal">
+      <div class="tracker-header">
+        <span class="tracker-label">Class Fundraising Goal</span>
+        <div class="tracker-pct" id="pctDisplay">0<span>%</span></div>
+      </div>
+      <div class="tracker-bar-wrap">
+        <div class="tracker-bar" id="trackerBar"></div>
+      </div>
+      <div class="tracker-meta">
+        <span>$0 raised</span>
+        <span>Goal: TBD</span>
+        <span>Updated weekly</span>
+      </div>
+    </div>
+
+    <!-- Pitch + Updates -->
+    <div class="pitch-block reveal">
+      <div class="pitch-left">
+        <div class="pitch-eyebrow">The Pitch</div>
+        <h3 class="pitch-title">Fundraiser Concept &amp; Strategy</h3>
+        <p class="pitch-text">The Xidiac fundraiser is a class-designed event — from concept to execution. The pitch concept will be revealed the week of April 22. Marketing materials, logistics, and updates will be hosted here as the event takes shape. Come back each week to follow the progress.</p>
+      </div>
+      <div class="pitch-right">
+        <div class="updates-label">Weekly Updates</div>
+        <div class="update-item">
+          <div class="update-date">April 22 — Week 1</div>
+          <div class="update-text"><strong>Pitch concept revealed.</strong> The class fundraiser concept is live. Check back for details on the event and how to support.</div>
+        </div>
+        <div class="update-item">
+          <div class="update-date">April 26 — Week 2</div>
+          <div class="update-text">Event progress update — coming soon.</div>
+        </div>
+        <div class="update-item">
+          <div class="update-date">May 3 — Week 3</div>
+          <div class="update-text">Event progress update — coming soon.</div>
+        </div>
+        <div class="update-item">
+          <div class="update-date">May 10 — Week 4</div>
+          <div class="update-text">Event progress update — coming soon.</div>
+        </div>
+        <div class="update-item">
+          <div class="update-date">May 17 — Week 5</div>
+          <div class="update-text">Fundraiser event recap — coming soon.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 3: CLASS VIDEO ── -->
+<section class="video-section">
+  <div class="video-inner">
+    <p class="v-eyebrow reveal">Section 03</p>
+    <h2 class="v-title reveal">The Class Video</h2>
+    <p class="v-sub reveal">Five weeks. Twelve people. One story. The class video documents the full Xidiac journey — from the first session to the final presentation. Published May 22.</p>
+    <div class="video-placeholder reveal">
+      <div class="vp-icon"></div>
+      <div class="vp-label">Class Video — Coming Soon</div>
+      <div class="vp-sub">Publishing Friday, May 22, 2026</div>
+    </div>
+    <div class="v-date reveal">Publication Date &mdash; May 22, 2026</div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-brand">XIDIAC</div>
+    <div class="footer-sub">Xi Class · Spring 2026</div>
+  </div>
+  <div class="footer-motto">Twelve distinct paths, aligned in a single direction, driven to create impact that lasts far beyond this moment.</div>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.classList.add('in');
+      if(e.target.classList.contains('tracker-block')) animateBar();
+    }
+  });
+}, {threshold:0.1});
+document.querySelectorAll('.reveal,.pres-card').forEach(el => obs.observe(el));
+
+// Fundraiser bar animation — set to 0% as placeholder
+function animateBar() {
+  const bar = document.getElementById('trackerBar');
+  const pct = document.getElementById('pctDisplay');
+  const target = 0; // UPDATE THIS NUMBER (0-100) each week
+  let current = 0;
+  const step = () => {
+    if(current < target) {
+      current = Math.min(current + 1, target);
+      bar.style.width = current + '%';
+      pct.innerHTML = current + '<span>%</span>';
+      requestAnimationFrame(step);
+    }
+  };
+  requestAnimationFrame(step);
+}
+</script>
+</body>
+</html>

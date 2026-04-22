@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Impact — XIDIAC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--snow:#F8F7F5;--linen:#E9E3D5;--bronze:#C59540;--red:#A31E21;--bordeaux:#620A1A;--carbon:#1D1D1D;--mid:#2a2a2a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--carbon);color:var(--linen);font-family:'Libre Baskerville',serif;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:24px 60px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(29,29,29,0.97),transparent);}
+.nav-logo{font-family:'Cinzel',serif;font-size:18px;font-weight:900;letter-spacing:0.3em;color:var(--snow);text-decoration:none;}
+.nav-logo span{color:var(--bronze);}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(233,227,213,0.5);text-decoration:none;transition:color 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--bronze);}
+
+/* ── HERO — dark, contemplative ── */
+.page-hero{
+  min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--carbon);padding:160px 60px 100px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.page-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 70% at 50% 55%,rgba(98,10,26,0.2) 0%,transparent 68%);
+}
+/* subtle grid lines */
+.page-hero::after{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(197,149,64,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(197,149,64,0.03) 1px,transparent 1px);
+  background-size:80px 80px;
+}
+.hero-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.5em;color:var(--bronze);text-transform:uppercase;margin-bottom:32px;opacity:0;animation:fadeUp 1s 0.2s ease forwards;position:relative;z-index:1;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(52px,9vw,110px);color:var(--snow);line-height:0.9;margin-bottom:32px;opacity:0;animation:fadeUp 1s 0.35s ease forwards;position:relative;z-index:1;}
+.hero-divider{width:80px;height:1px;background:var(--bronze);margin:0 auto 40px;opacity:0;animation:fadeUp 1s 0.5s ease forwards;position:relative;z-index:1;}
+.hero-intro{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2.5vw,22px);color:rgba(233,227,213,0.6);max-width:600px;line-height:1.8;opacity:0;animation:fadeUp 1s 0.6s ease forwards;position:relative;z-index:1;}
+.hero-intro em{color:var(--bronze);font-style:normal;}
+
+/* ── COMING SOON BANNER ── */
+.coming-banner{
+  background:rgba(98,10,26,0.25);border-top:1px solid rgba(197,149,64,0.2);border-bottom:1px solid rgba(197,149,64,0.2);
+  padding:20px 60px;display:flex;align-items:center;justify-content:center;gap:20px;
+}
+.banner-dot{width:6px;height:6px;border-radius:50%;background:var(--bronze);animation:pulse 2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.banner-text{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.4em;text-transform:uppercase;color:rgba(197,149,64,0.7);}
+
+/* ── MISSION BRIDGE ── */
+.mission-bridge{background:var(--linen);padding:100px 60px;}
+.mb-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.mb-left{}
+.mb-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.5em;color:var(--bronze);text-transform:uppercase;margin-bottom:16px;}
+.mb-heading{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(32px,4vw,52px);color:var(--bordeaux);line-height:1.2;margin-bottom:32px;}
+.mb-text{font-size:15px;line-height:2;color:var(--carbon);opacity:0.78;}
+.mb-right{display:flex;flex-direction:column;gap:24px;}
+.mb-stat{background:var(--carbon);padding:32px;border:1px solid rgba(197,149,64,0.1);}
+.mb-stat-num{font-family:'Cinzel',serif;font-size:48px;font-weight:900;color:var(--bordeaux);line-height:1;margin-bottom:8px;}
+.mb-stat-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;color:rgba(197,149,64,0.6);text-transform:uppercase;}
+
+/* ── SERVICE EVENT DETAILS ── */
+.event-section{background:var(--carbon);padding:100px 60px;}
+.ev-inner{max-width:1100px;margin:0 auto;}
+.ev-header{margin-bottom:64px;}
+.ev-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.5em;color:var(--bronze);text-transform:uppercase;margin-bottom:16px;display:block;}
+.ev-title{font-family:'Cinzel',serif;font-size:clamp(24px,4vw,42px);font-weight:700;letter-spacing:0.08em;color:var(--snow);}
+.ev-title span{color:var(--bronze);}
+
+.event-card{background:var(--mid);border:1px solid rgba(197,149,64,0.12);padding:56px;margin-bottom:2px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
+.ec-field-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.4em;color:var(--bronze);text-transform:uppercase;margin-bottom:10px;}
+.ec-field-val{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--snow);line-height:1.4;}
+.ec-field-val.pending{color:rgba(233,227,213,0.3);font-style:italic;font-size:16px;}
+
+/* ── GALLERY ── */
+.gallery-section{background:var(--mid);padding:80px 60px;}
+.gal-inner{max-width:1100px;margin:0 auto;}
+.gal-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.5em;color:var(--bronze);text-transform:uppercase;margin-bottom:40px;}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.gal-photo{
+  aspect-ratio:4/3;background:rgba(197,149,64,0.04);border:1px dashed rgba(197,149,64,0.12);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;
+}
+.gal-photo-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.25em;color:rgba(197,149,64,0.2);}
+.gal-photo-icon{font-size:24px;opacity:0.15;}
+
+/* ── REFLECTION ── */
+.reflection-section{background:var(--linen);padding:120px 60px;}
+.rf-inner{max-width:1000px;margin:0 auto;}
+.rf-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.5em;color:var(--bronze);text-transform:uppercase;margin-bottom:24px;display:block;}
+.rf-heading{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(32px,4vw,52px);color:var(--bordeaux);line-height:1.2;margin-bottom:48px;}
+.rf-divider{width:80px;height:1px;background:var(--bronze);margin-bottom:48px;}
+.rf-text{font-size:16px;line-height:2.1;color:var(--carbon);opacity:0.8;margin-bottom:24px;}
+.rf-text.placeholder{opacity:0.35;font-style:italic;}
+
+/* PULL QUOTE */
+.pull-quote{
+  background:var(--carbon);border-left:3px solid var(--bronze);
+  padding:48px 56px;margin:64px 0 0;position:relative;
+}
+.pq-mark{
+  font-family:'Cormorant Garamond',serif;font-size:80px;line-height:0.7;
+  color:rgba(197,149,64,0.15);position:absolute;top:32px;left:40px;font-style:italic;
+}
+.pq-text{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,3vw,30px);
+  color:var(--snow);line-height:1.65;margin-bottom:24px;position:relative;z-index:1;
+}
+.pq-text.placeholder{color:rgba(233,227,213,0.25);font-size:clamp(16px,2vw,22px);}
+.pq-attr{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;color:var(--bronze);text-transform:uppercase;}
+
+/* FOOTER */
+footer{background:var(--bordeaux);padding:56px 60px;display:flex;align-items:center;justify-content:space-between;}
+.footer-brand{font-family:'Cinzel',serif;font-size:20px;font-weight:900;letter-spacing:0.3em;color:var(--linen);}
+.footer-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(233,227,213,0.4);margin-top:6px;}
+.footer-motto{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(233,227,213,0.45);text-align:right;max-width:340px;line-height:1.75;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.85s ease,transform 0.85s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  nav{padding:18px 24px;} .nav-links{display:none;}
+  .mission-bridge,.event-section,.gallery-section,.reflection-section{padding:80px 24px;}
+  .mb-inner{grid-template-columns:1fr;gap:40px;}
+  .event-card{grid-template-columns:1fr;gap:28px;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .page-hero{padding:120px 24px 80px;}
+  .coming-banner{padding:18px 24px;}
+  footer{flex-direction:column;gap:20px;text-align:center;} .footer-motto{text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="xidiac.html" class="nav-logo">XI<span>DIAC</span></a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="our-class.html">Our Class</a></li>
+    <li><a href="our-work.html">Our Work</a></li>
+    <li><a href="our-impact.html" class="active">Our Impact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <p class="hero-eyebrow">Xi Class · Spring 2026</p>
+  <h1 class="hero-title">Our<br>Impact</h1>
+  <div class="hero-divider"></div>
+  <p class="hero-intro">
+    Business is not just about what we build for ourselves —<br>it is about what we contribute to the world around us.<br>
+    <em>This is our commitment beyond the classroom.</em>
+  </p>
+</div>
+
+<!-- COMING SOON BANNER -->
+<div class="coming-banner">
+  <div class="banner-dot"></div>
+  <span class="banner-text">This page will be published after our service event — May 3–9, 2026</span>
+  <div class="banner-dot"></div>
+</div>
+
+<!-- MISSION BRIDGE -->
+<section class="mission-bridge">
+  <div class="mb-inner">
+    <div class="mb-left reveal">
+      <div class="mb-eyebrow">Why We Serve</div>
+      <h2 class="mb-heading">Precision, Unity, and Purpose — Extended Beyond the Program</h2>
+      <p class="mb-text">Our class identity is built on the belief that great business leaders don't stop at the door of the boardroom. The same drive that pushes us through presentations and fundraisers also pushes us to show up for others. Community service is not a checkbox — it is a reflection of who Xidiac actually is.</p>
+      <br>
+      <p class="mb-text">Just as the zodiac cycle does not exist in isolation — each animal part of something larger — our class exists within a community. This page documents our contribution to it.</p>
+    </div>
+    <div class="mb-right reveal">
+      <div class="mb-stat">
+        <div class="mb-stat-num">12</div>
+        <div class="mb-stat-label">Members Serving Together</div>
+      </div>
+      <div class="mb-stat">
+        <div class="mb-stat-num">1</div>
+        <div class="mb-stat-label">Unified Service Mission</div>
+      </div>
+      <div class="mb-stat">
+        <div class="mb-stat-num">TBD</div>
+        <div class="mb-stat-label">Hours of Service — May 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENT DETAILS -->
+<section class="event-section">
+  <div class="ev-inner">
+    <div class="ev-header reveal">
+      <span class="ev-eyebrow">The Service Event</span>
+      <h2 class="ev-title">Event <span>Details</span></h2>
+    </div>
+    <div class="event-card reveal">
+      <div>
+        <div class="ec-field-label">Organization Served</div>
+        <div class="ec-field-val pending">To be announced</div>
+      </div>
+      <div>
+        <div class="ec-field-label">Location</div>
+        <div class="ec-field-val pending">To be announced</div>
+      </div>
+      <div>
+        <div class="ec-field-label">Date of Service</div>
+        <div class="ec-field-val pending">Week of May 3–9, 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO GALLERY -->
+<section class="gallery-section">
+  <div class="gal-inner">
+    <div class="gal-label reveal">Photo Gallery — Published After Event</div>
+    <div class="gallery-grid reveal">
+      <div class="gal-photo"><div class="gal-photo-icon">◻</div><div class="gal-photo-label">Photo 01</div></div>
+      <div class="gal-photo"><div class="gal-photo-icon">◻</div><div class="gal-photo-label">Photo 02</div></div>
+      <div class="gal-photo"><div class="gal-photo-icon">◻</div><div class="gal-photo-label">Photo 03</div></div>
+      <div class="gal-photo"><div class="gal-photo-icon">◻</div><div class="gal-photo-label">Photo 04</div></div>
+      <div class="gal-photo"><div class="gal-photo-icon">◻</div><div class="gal-photo-label">Photo 05</div></div>
+      <div class="gal-photo"><div class="gal-photo-icon">◻</div><div class="gal-photo-label">Photo 06</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REFLECTION + PULL QUOTE -->
+<section class="reflection-section">
+  <div class="rf-inner">
+    <span class="rf-eyebrow reveal">Class Reflection</span>
+    <h2 class="rf-heading reveal">What We Took Away</h2>
+    <div class="rf-divider reveal"></div>
+
+    <p class="rf-text placeholder reveal">
+      A brief class reflection will be published here after the service event is completed. This section will share what the experience meant to the class, what we observed, and how the day connected to the work we do as future business leaders.
+    </p>
+
+    <!-- Pull Quote -->
+    <div class="pull-quote reveal">
+      <div class="pq-mark">"</div>
+      <p class="pq-text placeholder">
+        A pull quote from one member of the class about the service experience will be published here following the event.
+      </p>
+      <div class="pq-attr">Xi Class Member · Xidiac Spring 2026</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-brand">XIDIAC</div>
+    <div class="footer-sub">Xi Class · Spring 2026</div>
+  </div>
+  <div class="footer-motto">Twelve distinct paths, aligned in a single direction, driven to create impact that lasts far beyond this moment.</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, {threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

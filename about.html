@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — XIDIAC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --snow: #F8F7F5; --linen: #E9E3D5; --bronze: #C59540;
+  --red: #A31E21; --bordeaux: #620A1A; --carbon: #1D1D1D; --mid: #2a2a2a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--carbon); color:var(--linen); font-family:'Libre Baskerville',serif; overflow-x:hidden; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  padding:24px 60px; display:flex; align-items:center; justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(29,29,29,0.97),transparent);
+}
+.nav-logo { font-family:'Cinzel',serif; font-size:18px; font-weight:900; letter-spacing:0.3em; color:var(--snow); text-decoration:none; }
+.nav-logo span { color:var(--bronze); }
+.nav-links { display:flex; gap:36px; list-style:none; }
+.nav-links a { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.28em; text-transform:uppercase; color:rgba(233,227,213,0.5); text-decoration:none; transition:color 0.3s; }
+.nav-links a:hover, .nav-links a.active { color:var(--bronze); }
+
+/* PAGE HERO */
+.page-hero {
+  min-height:55vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:var(--linen); position:relative; overflow:hidden; padding:140px 60px 80px;
+  text-align:center;
+}
+.page-hero::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 70% 70% at 50% 60%, rgba(98,10,26,0.07) 0%, transparent 70%);
+}
+.hero-eyebrow {
+  font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.5em;
+  color:var(--bronze); text-transform:uppercase; margin-bottom:24px;
+  opacity:0; animation:fadeUp 1s 0.2s ease forwards;
+}
+.hero-title {
+  font-family:'Cormorant Garamond',serif; font-weight:300; font-style:italic;
+  font-size:clamp(52px,9vw,110px); color:var(--bordeaux); line-height:0.95;
+  opacity:0; animation:fadeUp 1s 0.35s ease forwards;
+  position:relative; z-index:1;
+}
+.hero-divider {
+  width:80px; height:1px; background:var(--bronze); margin:40px auto 0;
+  opacity:0; animation:fadeUp 1s 0.5s ease forwards;
+}
+
+/* SECTION BASE */
+section { position:relative; }
+
+/* SECTION LABEL */
+.sec-label {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.5em;
+  text-transform:uppercase; color:var(--bronze); margin-bottom:16px; display:block;
+}
+
+/* SECTION 1 — WHO WE ARE */
+.s1 {
+  background:var(--linen); padding:100px 0 0;
+}
+.s1-inner {
+  max-width:1200px; margin:0 auto; padding:0 60px;
+  display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:start;
+}
+.s1-left { position:sticky; top:120px; }
+.s1-number {
+  font-family:'Cinzel',serif; font-size:120px; font-weight:900;
+  color:rgba(98,10,26,0.08); line-height:1; margin-bottom:-20px; margin-left:-8px;
+}
+.s1-heading {
+  font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;
+  font-size:clamp(36px,4vw,52px); color:var(--bordeaux); line-height:1.2; margin-bottom:32px;
+}
+.s1-right { padding:0 0 100px; }
+.s1-body {
+  font-size:16px; line-height:2; color:var(--carbon); opacity:0.82; margin-bottom:32px;
+}
+.s1-body strong { color:var(--bordeaux); font-weight:700; }
+.s1-pull {
+  font-family:'Cormorant Garamond',serif; font-style:italic; font-size:22px;
+  color:var(--bordeaux); line-height:1.6; border-left:3px solid var(--bronze);
+  padding-left:24px; margin:40px 0;
+}
+
+/* SECTION 2 — WHAT WE STAND FOR */
+.s2 { background:var(--carbon); padding:120px 60px; }
+.s2-inner { max-width:1200px; margin:0 auto; }
+.s2-header { margin-bottom:72px; }
+.s2-title {
+  font-family:'Cinzel',serif; font-size:clamp(28px,4vw,48px); font-weight:700;
+  letter-spacing:0.08em; color:var(--snow);
+}
+.s2-title span { color:var(--bronze); }
+.pillars {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:2px;
+}
+.pillar {
+  background:var(--mid); padding:56px 48px; position:relative; overflow:hidden;
+  border:1px solid rgba(197,149,64,0.07);
+  opacity:0; transform:translateY(30px);
+  transition:opacity 0.7s ease, transform 0.7s ease, background 0.3s;
+}
+.pillar.in { opacity:1; transform:translateY(0); }
+.pillar:hover { background:#252525; }
+.pillar::after {
+  content:''; position:absolute; bottom:0; left:0;
+  width:0; height:2px; background:var(--bronze); transition:width 0.4s;
+}
+.pillar:hover::after { width:100%; }
+.pillar-num {
+  font-family:'Cinzel',serif; font-size:48px; font-weight:900;
+  color:rgba(197,149,64,0.12); line-height:1; margin-bottom:24px;
+}
+.pillar-title {
+  font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.2em;
+  color:var(--bronze); text-transform:uppercase; margin-bottom:16px;
+}
+.pillar-text { font-size:15px; line-height:1.85; color:rgba(233,227,213,0.65); }
+
+/* SECTION 3 — OUR STRUCTURE */
+.s3 { background:var(--linen); padding:120px 60px; }
+.s3-inner { max-width:1200px; margin:0 auto; }
+.s3-intro {
+  display:grid; grid-template-columns:1fr 1fr; gap:80px; margin-bottom:80px; align-items:center;
+}
+.s3-heading {
+  font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;
+  font-size:clamp(36px,4vw,54px); color:var(--bordeaux); line-height:1.2;
+}
+.s3-text { font-size:16px; line-height:2; color:var(--carbon); opacity:0.8; }
+.zodiac-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:2px;
+}
+.zcard {
+  background:var(--carbon); padding:36px 28px; text-align:center;
+  border:1px solid rgba(197,149,64,0.1); transition:background 0.3s;
+  opacity:0; transform:translateY(20px);
+  transition:opacity 0.5s ease, transform 0.5s ease, background 0.3s;
+}
+.zcard.in { opacity:1; transform:translateY(0); }
+.zcard:hover { background:#252525; }
+.zcard-num {
+  font-family:'Cinzel',serif; font-size:8px; letter-spacing:0.3em;
+  color:var(--bronze); margin-bottom:12px;
+}
+.zcard-animal {
+  font-family:'Cormorant Garamond',serif; font-style:italic; font-size:20px;
+  color:var(--snow); margin-bottom:8px;
+}
+.zcard-name {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.15em;
+  color:rgba(233,227,213,0.45); text-transform:uppercase;
+}
+.s3-symbol {
+  max-width:700px; margin:80px auto 0; text-align:center;
+  padding:56px; background:var(--carbon); border:1px solid rgba(197,149,64,0.15);
+}
+.s3-symbol p {
+  font-family:'Cormorant Garamond',serif; font-style:italic; font-size:20px;
+  color:rgba(233,227,213,0.7); line-height:1.8;
+}
+.s3-symbol strong { color:var(--bronze); font-style:normal; }
+
+/* SECTION 4 — THE PROGRAM */
+.s4 { background:var(--bordeaux); padding:120px 60px; position:relative; overflow:hidden; }
+.s4::before {
+  content:'XIDIAC'; position:absolute; font-family:'Cinzel',serif; font-size:200px;
+  font-weight:900; color:rgba(255,255,255,0.04); top:50%; left:50%;
+  transform:translate(-50%,-50%); letter-spacing:0.1em; pointer-events:none; white-space:nowrap;
+}
+.s4-inner { max-width:900px; margin:0 auto; text-align:center; position:relative; z-index:1; }
+.s4-eyebrow {
+  font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.5em;
+  color:rgba(197,149,64,0.8); text-transform:uppercase; margin-bottom:32px;
+}
+.s4-heading {
+  font-family:'Cormorant Garamond',serif; font-weight:300; font-style:italic;
+  font-size:clamp(38px,5vw,64px); color:var(--snow); line-height:1.2; margin-bottom:48px;
+}
+.s4-divider { width:80px; height:1px; background:rgba(197,149,64,0.5); margin:0 auto 48px; }
+.s4-text {
+  font-size:17px; line-height:2.1; color:rgba(233,227,213,0.8); margin-bottom:48px;
+}
+.s4-pillars {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:64px;
+}
+.s4-pillar {
+  padding:40px 32px; border:1px solid rgba(197,149,64,0.2); text-align:center;
+  background:rgba(255,255,255,0.03);
+}
+.s4-pillar-icon { font-size:28px; margin-bottom:16px; }
+.s4-pillar-label {
+  font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.3em;
+  text-transform:uppercase; color:var(--bronze); margin-bottom:12px;
+}
+.s4-pillar-text { font-size:14px; line-height:1.7; color:rgba(233,227,213,0.6); }
+
+/* FOOTER */
+footer {
+  background:var(--carbon); padding:56px 60px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-top:1px solid rgba(197,149,64,0.1);
+}
+.footer-brand { font-family:'Cinzel',serif; font-size:20px; font-weight:900; letter-spacing:0.3em; color:var(--snow); }
+.footer-sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:rgba(233,227,213,0.4); margin-top:6px; }
+.footer-motto { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:rgba(233,227,213,0.45); text-align:right; max-width:340px; line-height:1.75; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+.reveal { opacity:0; transform:translateY(36px); transition:opacity 0.85s ease, transform 0.85s ease; }
+.reveal.in { opacity:1; transform:translateY(0); }
+
+@media(max-width:900px){
+  nav{padding:18px 24px;} .nav-links{display:none;}
+  .s1-inner,.s3-intro,.pillars,.s4-pillars{grid-template-columns:1fr;}
+  .s1,.s2,.s3,.s4{padding:80px 24px;}
+  .page-hero{padding:120px 24px 60px;}
+  .zodiac-grid{grid-template-columns:repeat(2,1fr);}
+  footer{flex-direction:column;gap:20px;text-align:center;} .footer-motto{text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="xidiac.html" class="nav-logo">XI<span>DIAC</span></a>
+  <ul class="nav-links">
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="our-class.html">Our Class</a></li>
+    <li><a href="our-work.html">Our Work</a></li>
+    <li><a href="our-impact.html">Our Impact</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <p class="hero-eyebrow">Xi Class · Spring 2026</p>
+  <h1 class="hero-title">About<br>Xidiac</h1>
+  <div class="hero-divider"></div>
+</div>
+
+<!-- SECTION 1 — WHO WE ARE -->
+<section class="s1">
+  <div class="s1-inner">
+    <div class="s1-left reveal">
+      <div class="s1-number">01</div>
+      <span class="sec-label">Who We Are</span>
+      <h2 class="s1-heading">A Collective Built on Ambition, Structure, and Purpose</h2>
+    </div>
+    <div class="s1-right">
+      <p class="s1-body reveal">
+        <strong>Xidiac</strong> represents a collective of twelve individuals unified through ambition, structure, and purpose. We are the Xi Pledge Class of Spring 2026 — twelve distinct people, each bringing a different background, a different perspective, and a different path.
+      </p>
+      <p class="s1-body reveal">
+        Our journey didn't begin with a shared hobby or a common interest. In fact, the more we searched for sameness, the more we felt stuck. The revelation came when we stopped looking for what made us alike and leaned into what made us different.
+      </p>
+      <blockquote class="s1-pull reveal">
+        "We discovered that while our backgrounds vary, our unified drive as future business leaders is what binds us."
+      </blockquote>
+      <p class="s1-body reveal">
+        This insight led us to the <strong>Chinese Zodiac</strong> as our guiding framework: twelve distinct animals, each unique, yet all part of one cohesive cycle. Just as no two animals are alike, no two members of Xidiac are alike — and that is precisely our strength.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2 — WHAT WE STAND FOR -->
+<section class="s2">
+  <div class="s2-inner">
+    <div class="s2-header reveal">
+      <span class="sec-label" style="color:var(--bronze)">What We Stand For</span>
+      <h2 class="s2-title">Twelve Paths.<br><span>One Direction.</span></h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar" style="transition-delay:0s">
+        <div class="pillar-num">I</div>
+        <div class="pillar-title">Individuality Within Unity</div>
+        <p class="pillar-text">Twelve individuals, twelve distinct paths — but one unified direction. We do not ask our members to be the same. We ask them to be fully themselves, and trust that together, those differences create something greater than any single part.</p>
+      </div>
+      <div class="pillar" style="transition-delay:0.1s">
+        <div class="pillar-num">II</div>
+        <div class="pillar-title">Strength Through Difference</div>
+        <p class="pillar-text">Our differences are not gaps to be bridged — they are our greatest resource. Finance minds sit alongside creative strategists. Entrepreneurs collaborate with consultants. That diversity of thought is exactly what future business leaders need.</p>
+      </div>
+      <div class="pillar" style="transition-delay:0.2s">
+        <div class="pillar-num">III</div>
+        <div class="pillar-title">Rooted in Tradition</div>
+        <p class="pillar-text">Inspired by the Chinese Zodiac — twelve animals, each carrying distinct energy and symbolism — we draw on a framework thousands of years old to remind us that cycles, structure, and identity are timeless. Tradition gives us roots.</p>
+      </div>
+      <div class="pillar" style="transition-delay:0.3s">
+        <div class="pillar-num">IV</div>
+        <div class="pillar-title">Forward Momentum</div>
+        <p class="pillar-text">Precision, unity, forward momentum, and discipline — together as a team. The zodiac moves forward. So do we. Respecting the foundations that guide us while continuously evolving is not a contradiction; it is the only way to grow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 — OUR STRUCTURE -->
+<section class="s3">
+  <div class="s3-inner">
+    <div class="s3-intro reveal">
+      <div>
+        <span class="sec-label" style="color:var(--bronze)">Our Structure</span>
+        <h2 class="s3-heading">Twelve Members.<br>Twelve Animals.<br>One Logo.</h2>
+      </div>
+      <div>
+        <p class="s3-text">Each of the twelve members of Xidiac is assigned a zodiac animal — not arbitrarily, but as a symbol of their role within the class. The same twelve nodes that appear in our logo each correspond to a person. The symbol is intentional: every time you see the XI monogram, you see all of us.</p>
+        <br>
+        <p class="s3-text">The circular logo system — with its golden ring and 12 outer nodes — mirrors the zodiac cycle itself. A continuous loop with no beginning and no end, where every position holds equal weight.</p>
+      </div>
+    </div>
+
+    <div class="zodiac-grid">
+      <div class="zcard" style="transition-delay:0s"><div class="zcard-num">01 · RAT</div><div class="zcard-animal">Rat</div><div class="zcard-name">Eric Cho</div></div>
+      <div class="zcard" style="transition-delay:0.05s"><div class="zcard-num">02 · OX</div><div class="zcard-animal">Ox</div><div class="zcard-name">Roman Young</div></div>
+      <div class="zcard" style="transition-delay:0.1s"><div class="zcard-num">03 · TIGER</div><div class="zcard-animal">Tiger</div><div class="zcard-name">Aayush Sangani</div></div>
+      <div class="zcard" style="transition-delay:0.15s"><div class="zcard-num">04 · RABBIT</div><div class="zcard-animal">Rabbit</div><div class="zcard-name">Vihan Shah</div></div>
+      <div class="zcard" style="transition-delay:0.2s"><div class="zcard-num">05 · DRAGON</div><div class="zcard-animal">Dragon</div><div class="zcard-name">Ava Sam</div></div>
+      <div class="zcard" style="transition-delay:0.25s"><div class="zcard-num">06 · SNAKE</div><div class="zcard-animal">Snake</div><div class="zcard-name">Doris Wu</div></div>
+      <div class="zcard" style="transition-delay:0.3s"><div class="zcard-num">07 · HORSE</div><div class="zcard-animal">Horse</div><div class="zcard-name">Haasika Yarlagadda</div></div>
+      <div class="zcard" style="transition-delay:0.35s"><div class="zcard-num">08 · GOAT</div><div class="zcard-animal">Goat</div><div class="zcard-name">Tanner Bradley</div></div>
+      <div class="zcard" style="transition-delay:0.4s"><div class="zcard-num">09 · MONKEY</div><div class="zcard-animal">Monkey</div><div class="zcard-name">Stephen Pham</div></div>
+      <div class="zcard" style="transition-delay:0.45s"><div class="zcard-num">10 · ROOSTER</div><div class="zcard-animal">Rooster</div><div class="zcard-name">Mishka Raja</div></div>
+      <div class="zcard" style="transition-delay:0.5s"><div class="zcard-num">11 · DOG</div><div class="zcard-animal">Dog</div><div class="zcard-name">Sean An</div></div>
+      <div class="zcard" style="transition-delay:0.55s"><div class="zcard-num">12 · PIG</div><div class="zcard-animal">Pig</div><div class="zcard-name">Kyler Khang</div></div>
+    </div>
+
+    <div class="s3-symbol reveal">
+      <p>The logo is not decoration — it is <strong>a map of who we are</strong>. Each node, each ring, each element exists with intention. The XI at the center represents both the Roman numeral eleven and the Greek letter xi, the symbol of our class. The golden circle binds twelve distinct points into one unbroken whole.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4 — THE PROGRAM -->
+<section class="s4">
+  <div class="s4-inner">
+    <p class="s4-eyebrow reveal">The Program</p>
+    <h2 class="s4-heading reveal">One Shared Challenge.<br>Five Weeks. Twelve People.</h2>
+    <div class="s4-divider reveal"></div>
+    <p class="s4-text reveal">
+      Over five weeks, Xidiac is building something together — not in spite of our differences, but because of them. The program brings together professional presentations, a class fundraiser, and community service into one unified story of what it means to lead, collaborate, and create impact. Every deliverable is a shared challenge. Every result belongs to all twelve of us.
+    </p>
+    <div class="s4-pillars reveal">
+      <div class="s4-pillar">
+        <div class="s4-pillar-icon">◈</div>
+        <div class="s4-pillar-label">Professional Work</div>
+        <p class="s4-pillar-text">Four major presentations across Product Strategy, Finance, Strategy Consulting, and Entrepreneurship — built and delivered together.</p>
+      </div>
+      <div class="s4-pillar">
+        <div class="s4-pillar-icon">◈</div>
+        <div class="s4-pillar-label">Fundraising</div>
+        <p class="s4-pillar-text">A class-wide fundraising effort from concept pitch to event execution — planned, marketed, and run by the twelve members of Xidiac.</p>
+      </div>
+      <div class="s4-pillar">
+        <div class="s4-pillar-icon">◈</div>
+        <div class="s4-pillar-label">Community Service</div>
+        <p class="s4-pillar-text">Giving back as a class. One service event, one organization, one reflection — connecting our professional growth to a larger sense of purpose.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-brand">XIDIAC</div>
+    <div class="footer-sub">Xi Class · Spring 2026</div>
+  </div>
+  <div class="footer-motto">Twelve distinct paths, aligned in a single direction, driven to create impact that lasts far beyond this moment.</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold:0.1 });
+document.querySelectorAll('.reveal,.pillar,.zcard').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

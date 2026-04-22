@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XIDIAC — Xi Class Spring 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --snow: #F8F7F5;
+    --linen: #E9E3D5;
+    --bronze: #C59540;
+    --red: #A31E21;
+    --bordeaux: #620A1A;
+    --carbon: #1D1D1D;
+    --carbon-mid: #2a2a2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--carbon);
+    color: var(--linen);
+    font-family: 'Libre Baskerville', serif;
+    overflow-x: hidden;
+  }
+
+  /* ══════════════════════════════
+     PASSWORD GATE
+  ══════════════════════════════ */
+  #gate {
+    position: fixed;
+    inset: 0;
+    background: var(--carbon);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  #gate.unlocking {
+    opacity: 0;
+    transform: scale(1.04);
+    pointer-events: none;
+  }
+
+  .gate-logo {
+    margin-bottom: 48px;
+    animation: fadeUp 1s ease both;
+  }
+
+  .gate-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(42px, 8vw, 72px);
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    color: var(--snow);
+    animation: fadeUp 1s 0.15s ease both;
+    margin-bottom: 8px;
+  }
+
+  .gate-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    color: var(--bronze);
+    text-transform: uppercase;
+    animation: fadeUp 1s 0.25s ease both;
+    margin-bottom: 64px;
+  }
+
+  .gate-divider {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--bronze), transparent);
+    margin-bottom: 64px;
+    animation: fadeUp 1s 0.1s ease both;
+  }
+
+  .gate-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    animation: fadeUp 1s 0.4s ease both;
+    width: 320px;
+  }
+
+  .gate-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--bronze);
+    text-transform: uppercase;
+    align-self: flex-start;
+  }
+
+  .gate-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(197,149,64,0.4);
+    color: var(--snow);
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    letter-spacing: 0.4em;
+    padding: 12px 0;
+    outline: none;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+  .gate-input:focus { border-bottom-color: var(--bronze); }
+  .gate-input::placeholder { color: rgba(233,227,213,0.2); letter-spacing: 0.2em; }
+
+  .gate-btn {
+    width: 100%;
+    background: var(--bordeaux);
+    border: none;
+    color: var(--linen);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 8px;
+  }
+  .gate-btn:hover { background: var(--red); }
+
+  .gate-error {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    min-height: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .gate-error.show { opacity: 1; }
+
+  /* ══════════════════════════════
+     MAIN SITE
+  ══════════════════════════════ */
+  #site { display: none; }
+  #site.visible { display: block; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(29,29,29,0.97), transparent);
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    color: var(--snow);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--bronze); }
+
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(233,227,213,0.55);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--bronze); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--carbon);
+    position: relative;
+    overflow: hidden;
+    padding: 120px 40px 80px;
+  }
+
+  #hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(98,10,26,0.14) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .corner { position: absolute; width: 60px; height: 60px; opacity: 0.25; }
+  .corner-tl { top: 80px; left: 60px; border-top: 1px solid var(--bronze); border-left: 1px solid var(--bronze); }
+  .corner-tr { top: 80px; right: 60px; border-top: 1px solid var(--bronze); border-right: 1px solid var(--bronze); }
+  .corner-bl { bottom: 40px; left: 60px; border-bottom: 1px solid var(--bronze); border-left: 1px solid var(--bronze); }
+  .corner-br { bottom: 40px; right: 60px; border-bottom: 1px solid var(--bronze); border-right: 1px solid var(--bronze); }
+
+  .hero-wordmark {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: clamp(48px, 10vw, 100px);
+    letter-spacing: 0.22em;
+    color: var(--snow);
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1.2s 0.3s ease forwards;
+  }
+
+  .logo-container {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.5s ease forwards;
+  }
+
+  .logo-svg { width: 100%; height: 100%; overflow: visible; }
+
+  .ring-outer {
+    transform-origin: 160px 160px;
+    animation: spinSlow 50s linear infinite;
+  }
+
+  .zodiac-node { cursor: pointer; }
+  .zodiac-node .nc { fill: var(--bronze); transition: filter 0.25s; }
+  .zodiac-node:hover .nc { filter: brightness(1.7) drop-shadow(0 0 6px rgba(197,149,64,0.8)); }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(15px, 2vw, 19px);
+    color: rgba(233,227,213,0.65);
+    letter-spacing: 0.04em;
+    text-align: center;
+    max-width: 560px;
+    line-height: 1.85;
+    margin-top: 56px;
+    z-index: 2;
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.8s ease forwards;
+  }
+  .hero-tagline em { color: var(--bronze); font-style: normal; font-weight: 600; }
+
+  /* ── TOOLTIP ── */
+  #tooltip {
+    position: fixed;
+    background: rgba(29,29,29,0.97);
+    border: 1px solid var(--bronze);
+    color: var(--snow);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 500;
+    white-space: nowrap;
+  }
+  #tooltip .ta { color: var(--bronze); display: block; font-size: 8px; margin-top: 3px; }
+
+  /* ── MISSION ── */
+  #mission {
+    background: var(--linen);
+    padding: 130px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #mission::before {
+    content: 'XI';
+    position: absolute;
+    font-family: 'Cinzel', serif;
+    font-size: 300px;
+    font-weight: 900;
+    color: rgba(98,10,26,0.04);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    letter-spacing: 0.1em;
+  }
+
+  .mission-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    color: var(--bronze);
+    margin-bottom: 32px;
+  }
+
+  .mission-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 5vw, 58px);
+    font-weight: 300;
+    color: var(--bordeaux);
+    text-align: center;
+    line-height: 1.25;
+    max-width: 800px;
+    margin-bottom: 48px;
+    font-style: italic;
+  }
+
+  .mission-divider {
+    width: 80px; height: 1px;
+    background: var(--bronze);
+    margin-bottom: 48px;
+  }
+
+  .mission-text {
+    font-size: 16px;
+    line-height: 2;
+    color: var(--carbon);
+    text-align: center;
+    max-width: 680px;
+    margin-bottom: 56px;
+    opacity: 0.82;
+  }
+
+  .mission-cta {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--bordeaux);
+    text-decoration: none;
+    border-bottom: 1px solid var(--bronze);
+    padding-bottom: 4px;
+    transition: color 0.3s, letter-spacing 0.3s;
+  }
+  .mission-cta:hover { color: var(--red); letter-spacing: 0.45em; }
+
+  /* ── LATEST CONTENT ── */
+  #content {
+    background: var(--carbon);
+    padding: 120px 60px;
+  }
+
+  .content-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 64px;
+    border-bottom: 1px solid rgba(197,149,64,0.2);
+    padding-bottom: 28px;
+  }
+
+  .content-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--snow);
+  }
+  .content-title span { color: var(--bronze); }
+
+  .view-all {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--bronze);
+    text-decoration: none;
+  }
+  .view-all:hover { color: var(--snow); }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .card {
+    background: var(--carbon-mid);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.35s;
+    cursor: pointer;
+    border: 1px solid rgba(197,149,64,0.07);
+  }
+  .card:hover { background: #252525; }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--bronze);
+    transition: width 0.4s ease;
+  }
+  .card:hover::after { width: 100%; }
+
+  .card-num {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: rgba(197,149,64,0.35);
+    margin-bottom: 28px;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: var(--bronze);
+    border: 1px solid rgba(197,149,64,0.3);
+    padding: 4px 10px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px;
+    font-weight: 600;
+    color: var(--snow);
+    line-height: 1.35;
+    margin-bottom: 16px;
+  }
+
+  .card-date {
+    font-size: 11px;
+    color: rgba(233,227,213,0.3);
+    letter-spacing: 0.1em;
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  .card-arrow {
+    position: absolute;
+    bottom: 40px; right: 40px;
+    font-size: 18px;
+    color: rgba(197,149,64,0.25);
+    transition: color 0.3s, transform 0.3s;
+  }
+  .card:hover .card-arrow { color: var(--bronze); transform: translate(4px,-4px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bordeaux);
+    padding: 56px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    color: var(--linen);
+  }
+
+  .footer-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(233,227,213,0.45);
+    margin-top: 6px;
+    letter-spacing: 0.15em;
+  }
+
+  .footer-motto {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: rgba(233,227,213,0.55);
+    text-align: right;
+    max-width: 360px;
+    line-height: 1.75;
+  }
+
+  /* ── OVERLAY ── */
+  #overlay {
+    position: fixed; inset: 0; z-index: 900;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(29,29,29,0.9);
+    backdrop-filter: blur(10px);
+  }
+  #overlay.open { display: flex; }
+
+  .ov-card {
+    background: var(--carbon-mid);
+    border: 1px solid var(--bronze);
+    max-width: 460px; width: 90%;
+    padding: 52px;
+    position: relative;
+    animation: ovIn 0.35s ease;
+  }
+
+  @keyframes ovIn {
+    from { opacity:0; transform:translateY(20px) scale(0.97); }
+    to { opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .ov-close {
+    position: absolute; top: 20px; right: 20px;
+    background: none; border: none;
+    color: rgba(233,227,213,0.35);
+    font-size: 18px; cursor: pointer;
+    font-family: 'Cinzel', serif;
+    transition: color 0.25s;
+  }
+  .ov-close:hover { color: var(--bronze); }
+
+  .ov-num {
+    font-family: 'Cinzel', serif;
+    font-size: 10px; letter-spacing: 0.4em;
+    color: var(--bronze); margin-bottom: 6px;
+  }
+
+  .ov-name {
+    font-family: 'Cinzel', serif;
+    font-size: 28px; font-weight: 700;
+    letter-spacing: 0.1em; color: var(--snow);
+    margin-bottom: 36px; padding-bottom: 28px;
+    border-bottom: 1px solid rgba(197,149,64,0.2);
+  }
+
+  .ov-video {
+    background: rgba(98,10,26,0.15);
+    border: 1px dashed rgba(197,149,64,0.2);
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif; font-size: 9px;
+    letter-spacing: 0.3em; color: rgba(233,227,213,0.25);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(30px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  @keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(36px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.in { opacity:1; transform:translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    #hero { padding: 100px 20px 60px; }
+    .logo-container { width: 260px; height: 260px; }
+    #mission, #content { padding: 80px 24px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 20px; text-align: center; }
+    .footer-motto { text-align: center; }
+    .content-header { flex-direction: column; gap: 12px; }
+    .corner { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <div class="gate-logo">
+    <!-- inline mini logo -->
+    <svg width="96" height="96" viewBox="0 0 96 96" fill="none">
+      <circle cx="48" cy="48" r="40" stroke="#C59540" stroke-width="1.2"/>
+      <circle cx="48" cy="48" r="33" stroke="#C59540" stroke-width="0.5" opacity="0.4"/>
+      <!-- 12 nodes r=40 -->
+      <circle cx="48" cy="8" r="3.5" fill="#C59540"/>
+      <circle cx="68" cy="13.6" r="3.5" fill="#C59540"/>
+      <circle cx="82.4" cy="28" r="3.5" fill="#C59540"/>
+      <circle cx="88" cy="48" r="3.5" fill="#C59540"/>
+      <circle cx="82.4" cy="68" r="3.5" fill="#C59540"/>
+      <circle cx="68" cy="82.4" r="3.5" fill="#C59540"/>
+      <circle cx="48" cy="88" r="3.5" fill="#C59540"/>
+      <circle cx="28" cy="82.4" r="3.5" fill="#C59540"/>
+      <circle cx="13.6" cy="68" r="3.5" fill="#C59540"/>
+      <circle cx="8" cy="48" r="3.5" fill="#C59540"/>
+      <circle cx="13.6" cy="28" r="3.5" fill="#C59540"/>
+      <circle cx="28" cy="13.6" r="3.5" fill="#C59540"/>
+      <text x="48" y="56" font-family="Georgia,serif" font-size="28" font-weight="700" fill="#620A1A" text-anchor="middle" dominant-baseline="central">XI</text>
+    </svg>
+  </div>
+
+  <div class="gate-title">XIDIAC</div>
+  <div class="gate-sub">Xi Class &middot; Spring 2026</div>
+  <div class="gate-divider"></div>
+
+  <div class="gate-form">
+    <label class="gate-label">Enter Class Password</label>
+    <input type="password" class="gate-input" id="pwInput" placeholder="&middot; &middot; &middot; &middot; &middot; &middot;" autocomplete="off">
+    <div class="gate-error" id="pwErr">Incorrect password. Please try again.</div>
+    <button class="gate-btn" id="pwBtn">Enter &rarr;</button>
+  </div>
+</div>
+
+<!-- TOOLTIP -->
+<div id="tooltip"><span id="ttN"></span><span class="ta" id="ttA"></span></div>
+
+<!-- MAIN SITE -->
+<div id="site">
+
+  <nav>
+    <a href="#" class="nav-logo">XI<span>DIAC</span></a>
+    <ul class="nav-links">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Our Class</a></li>
+      <li><a href="#">Our Work</a></li>
+      <li><a href="#">Our Impact</a></li>
+    </ul>
+  </nav>
+
+  <!-- SECTION 1 — LOGO HERO -->
+  <section id="hero">
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <div class="hero-wordmark">XIDIAC</div>
+
+    <div class="logo-container" id="logoContainer">
+      <svg class="logo-svg" viewBox="0 0 320 320" fill="none">
+        <!-- Static inner ring -->
+        <circle cx="160" cy="160" r="98" stroke="#C59540" stroke-width="1.5" opacity="0.5"/>
+
+        <!-- Outer spinning group — r=130 from center -->
+        <g class="ring-outer">
+          <circle cx="160" cy="160" r="130" stroke="#C59540" stroke-width="1" opacity="0.35"/>
+
+          <!-- Node coords: cx = 160+130*cos(a), cy = 160+130*sin(a)  a = (i*30-90)*PI/180 -->
+          <!-- i=0 top: 160, 30 | i=1: 225, 47.5 | i=2: 272.5, 95 | i=3: 290, 160 -->
+          <!-- i=4: 272.5, 225 | i=5: 225, 272.5 | i=6: 160, 290 | i=7: 95, 272.5 -->
+          <!-- i=8: 47.5, 225 | i=9: 30, 160 | i=10: 47.5, 95 | i=11: 95, 47.5 -->
+
+          <g class="zodiac-node" data-i="0">
+            <circle class="nc" cx="160" cy="30" r="9"/>
+            <circle cx="160" cy="30" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+          <g class="zodiac-node" data-i="1">
+            <circle class="nc" cx="225" cy="47.5" r="9"/>
+            <circle cx="225" cy="47.5" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+          <g class="zodiac-node" data-i="2">
+            <circle class="nc" cx="272.5" cy="95" r="9"/>
+            <circle cx="272.5" cy="95" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+          <g class="zodiac-node" data-i="3">
+            <circle class="nc" cx="290" cy="160" r="9"/>
+            <circle cx="290" cy="160" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+          <g class="zodiac-node" data-i="4">
+            <circle class="nc" cx="272.5" cy="225" r="9"/>
+            <circle cx="272.5" cy="225" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+          <g class="zodiac-node" data-i="5">
+            <circle class="nc" cx="225" cy="272.5" r="9"/>
+            <circle cx="225" cy="272.5" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+          <g class="zodiac-node" data-i="6">
+            <circle class="nc" cx="160" cy="290" r="9"/>
+            <circle cx="160" cy="290" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+          <g class="zodiac-node" data-i="7">
+            <circle class="nc" cx="95" cy="272.5" r="9"/>
+            <circle cx="95" cy="272.5" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+          <g class="zodiac-node" data-i="8">
+            <circle class="nc" cx="47.5" cy="225" r="9"/>
+            <circle cx="47.5" cy="225" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+          <g class="zodiac-node" data-i="9">
+            <circle class="nc" cx="30" cy="160" r="9"/>
+            <circle cx="30" cy="160" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+          <g class="zodiac-node" data-i="10">
+            <circle class="nc" cx="47.5" cy="95" r="9"/>
+            <circle cx="47.5" cy="95" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+          <g class="zodiac-node" data-i="11">
+            <circle class="nc" cx="95" cy="47.5" r="9"/>
+            <circle cx="95" cy="47.5" r="14" fill="none" stroke="#C59540" stroke-width="0.5" opacity="0.3"/>
+          </g>
+        </g>
+
+        <!-- Static XI center -->
+        <circle cx="160" cy="160" r="65" fill="rgba(233,227,213,0.04)"/>
+        <circle cx="160" cy="160" r="65" stroke="#620A1A" stroke-width="0.5" opacity="0.4"/>
+        <text x="160" y="160" font-family="'Cinzel',Georgia,serif" font-size="68" font-weight="700"
+              fill="#620A1A" text-anchor="middle" dominant-baseline="central">XI</text>
+      </svg>
+    </div>
+
+    <p class="hero-tagline">
+      <em>Twelve distinct paths,</em> aligned in a single direction,<br>
+      driven to create impact that lasts far beyond this moment.
+    </p>
+  </section>
+
+  <!-- SECTION 2 — MISSION -->
+  <section id="mission">
+    <p class="mission-label reveal">Who We Are</p>
+    <h2 class="mission-heading reveal">
+      Developing Precision, Unity,<br>
+      Forward Momentum, and Discipline<br>
+      Together as a Team.
+    </h2>
+    <div class="mission-divider reveal"></div>
+    <p class="mission-text reveal">
+      Xidiac is a collective of twelve individuals unified through ambition, structure, and purpose.
+      Inspired by the Chinese Zodiac — twelve distinct paths, one cohesive cycle — the brand emphasizes
+      individuality within a system. Each member contributes something unique to the whole. Just as the
+      zodiac cycle is rooted in tradition yet moves forward with time, we aim to respect the foundations
+      that guide us while continuously evolving as future business leaders.
+    </p>
+    <a href="#" class="mission-cta reveal">Learn About Our Class</a>
+  </section>
+
+  <!-- SECTION 3 — LATEST CONTENT -->
+  <section id="content">
+    <div class="content-header reveal">
+      <h2 class="content-title">Latest <span>Updates</span></h2>
+      <a href="#" class="view-all">View All &rarr;</a>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card reveal">
+        <div class="card-num">\01</div>
+        <div class="card-tag">Our Class</div>
+        <h3 class="card-title">Xi Class Launch — Team Page Now Live</h3>
+        <p class="card-date">April 22, 2026</p>
+        <div class="card-arrow">&#8599;</div>
+      </div>
+
+      <div class="card reveal" style="transition-delay:0.12s">
+        <div class="card-num">\02</div>
+        <div class="card-tag">Fundraiser</div>
+        <h3 class="card-title">Pitch Concept Reveal — Fundraiser Launches</h3>
+        <p class="card-date">April 22, 2026</p>
+        <div class="card-arrow">&#8599;</div>
+      </div>
+
+      <div class="card reveal" style="transition-delay:0.24s">
+        <div class="card-num">\03</div>
+        <div class="card-tag">Presentations</div>
+        <h3 class="card-title">Product Strategy Brief — The Challenge Begins</h3>
+        <p class="card-date">April 26, 2026</p>
+        <div class="card-arrow">&#8599;</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <div class="footer-brand">XIDIAC</div>
+      <div class="footer-sub">Xi Class &middot; Spring 2026</div>
+    </div>
+    <div class="footer-motto">
+      Twelve distinct paths, aligned in a single direction,<br>
+      driven to create impact that lasts far beyond this moment.
+    </div>
+  </footer>
+
+</div><!-- /site -->
+
+<!-- MEMBER OVERLAY -->
+<div id="overlay">
+  <div class="ov-card">
+    <button class="ov-close" id="ovClose">&#215;</button>
+    <div class="ov-num" id="ovNum"></div>
+    <div class="ov-name" id="ovName"></div>
+    <div class="ov-video">60-SECOND INTRO VIDEO &mdash; COMING SOON</div>
+  </div>
+</div>
+
+<script>
+  const members = [
+    { num:'01', name:'ERIC CHO',           animal:'RAT' },
+    { num:'02', name:'ROMAN YOUNG',        animal:'OX' },
+    { num:'03', name:'AAYUSH SANGANI',     animal:'TIGER' },
+    { num:'04', name:'VIHAN SHAH',         animal:'RABBIT' },
+    { num:'05', name:'AVA SAM',            animal:'DRAGON' },
+    { num:'06', name:'DORIS WU',           animal:'SNAKE' },
+    { num:'07', name:'HAASIKA YARLAGADDA', animal:'HORSE' },
+    { num:'08', name:'TANNER BRADLEY',     animal:'GOAT' },
+    { num:'09', name:'STEPHEN PHAM',       animal:'MONKEY' },
+    { num:'10', name:'MISHKA RAJA',        animal:'ROOSTER' },
+    { num:'11', name:'SEAN AN',            animal:'DOG' },
+    { num:'12', name:'KYLER KHANG',        animal:'PIG' },
+  ];
+
+  // ─── PASSWORD ───
+  const PASS = 'xidiac2026';
+  const gate = document.getElementById('gate');
+  const site = document.getElementById('site');
+  const pwInput = document.getElementById('pwInput');
+  const pwErr   = document.getElementById('pwErr');
+
+  function tryUnlock() {
+    if (pwInput.value.trim().toLowerCase() === PASS) {
+      gate.classList.add('unlocking');
+      setTimeout(() => {
+        gate.style.display = 'none';
+        site.classList.add('visible');
+        initReveal();
+      }, 820);
+    } else {
+      pwErr.classList.add('show');
+      pwInput.value = '';
+      pwInput.focus();
+      setTimeout(() => pwErr.classList.remove('show'), 2600);
+    }
+  }
+
+  document.getElementById('pwBtn').addEventListener('click', tryUnlock);
+  pwInput.addEventListener('keydown', e => e.key === 'Enter' && tryUnlock());
+
+  // ─── SCROLL REVEAL ───
+  function initReveal() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  }
+
+  // ─── NODES ───
+  const tt    = document.getElementById('tooltip');
+  const ttN   = document.getElementById('ttN');
+  const ttA   = document.getElementById('ttA');
+  const overlay = document.getElementById('overlay');
+  const ovNum   = document.getElementById('ovNum');
+  const ovName  = document.getElementById('ovName');
+
+  document.querySelectorAll('.zodiac-node').forEach(node => {
+    const m = members[parseInt(node.dataset.i)];
+
+    node.addEventListener('mouseenter', () => {
+      ttN.textContent = m.name;
+      ttA.textContent = m.num + ' · ' + m.animal;
+      tt.style.opacity = '1';
+    });
+    node.addEventListener('mousemove', e => {
+      tt.style.left = (e.clientX + 18) + 'px';
+      tt.style.top  = (e.clientY - 12) + 'px';
+    });
+    node.addEventListener('mouseleave', () => tt.style.opacity = '0');
+    node.addEventListener('click', () => {
+      ovNum.textContent  = m.num + ' · ' + m.animal;
+      ovName.textContent = m.name;
+      overlay.classList.add('open');
+    });
+  });
+
+  document.getElementById('ovClose').addEventListener('click', () => overlay.classList.remove('open'));
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+</script>
+</body>
+</html>
