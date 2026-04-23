@@ -925,6 +925,7 @@
     const m = members[parseInt(node.dataset.i)];
 
     node.addEventListener('mouseenter', () => {
+      userActive = true;
       clearInterval(demoInterval);
       hand.style.transition = 'none';
       hand.style.opacity = '0';
@@ -981,6 +982,7 @@
   const nodes = document.querySelectorAll('.zodiac-node');
   let demoI = 0;
   let demoInterval;
+  let userActive = false;
 
   const hand = document.createElement('div');
   hand.id = 'demoHand';
@@ -997,8 +999,22 @@
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
   `;
   document.body.appendChild(hand);
+  document.querySelector('.logo-svg').addEventListener('mousemove', function(e) {
+  if (userActive) return;
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  if (!el) return;
+  const node = el.closest('.zodiac-node') || (el.classList.contains('nc') ? el.parentElement : null);
+  if (node) {
+    userActive = true;
+    clearInterval(demoInterval);
+    hand.style.transition = 'none';
+    hand.style.opacity = '0';
+    tt.style.opacity = '0';
+  }
+});
 
   function moveHandToNode(node) {
+    if (userActive) return;
     const rect = node.getBoundingClientRect();
     hand.style.left = (rect.left + rect.width / 2 - 10) + 'px';
     hand.style.top  = (rect.top + rect.height / 2 - 24) + 'px';
@@ -1009,6 +1025,7 @@
 
   setTimeout(() => {
     demoInterval = setInterval(() => {
+      if (userActive) { clearInterval(demoInterval); return; }
       const node = nodes[demoI];
       const m = members[demoI];
       const rect = node.getBoundingClientRect();
