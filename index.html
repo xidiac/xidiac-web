@@ -924,6 +924,7 @@
     const m = members[parseInt(node.dataset.i)];
 
     node.addEventListener('mouseenter', () => {
+      clearInterval(demoInterval);
       ttN.textContent = m.name;
       ttA.textContent = m.num + ' · ' + m.animal;
       tt.style.opacity = '1';
@@ -1018,15 +1019,6 @@
     }, 800);
   }, 2000);
 
-  document.querySelectorAll('.zodiac-node').forEach(node => {
-   node.addEventListener('mouseenter', () => {
-      clearInterval(demoInterval);
-      hand.style.opacity = '0';
-      ttN.textContent = m.name;
-      ttA.textContent = m.num + ' · ' + m.animal;
-      tt.style.opacity = '1';
-    });
-  });
   document.getElementById('logoContainer').addEventListener('touchstart', () => {
     clearInterval(demoInterval);
     tt.style.opacity = '0';
