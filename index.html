@@ -1019,10 +1019,12 @@
   }, 2000);
 
   document.querySelectorAll('.zodiac-node').forEach(node => {
-    node.addEventListener('mouseenter', () => {
+   node.addEventListener('mouseenter', () => {
       clearInterval(demoInterval);
-      tt.style.opacity = '0';
       hand.style.opacity = '0';
+      ttN.textContent = m.name;
+      ttA.textContent = m.num + ' · ' + m.animal;
+      tt.style.opacity = '1';
     });
   });
   document.getElementById('logoContainer').addEventListener('touchstart', () => {
