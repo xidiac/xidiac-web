@@ -913,6 +913,64 @@
       navLinks.classList.remove('open');
     });
   });
+
+  // ─── AUTO-DEMO TOOLTIP + CURSOR ───
+  const nodes = document.querySelectorAll('.zodiac-node');
+  let demoI = 0;
+  let demoInterval;
+
+  const hand = document.createElement('div');
+  hand.id = 'demoHand';
+  hand.innerHTML = `<svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0 L0 20 L5 15 L9 24 L12 23 L8 14 L15 14 Z" fill="#F8F7F5" stroke="#C59540" stroke-width="1"/>
+  </svg>`;
+  hand.style.cssText = `
+    position: fixed;
+    pointer-events: none;
+    z-index: 600;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.15s;
+    transform: scale(1);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  `;
+  document.body.appendChild(hand);
+
+  function moveHandToNode(node) {
+    const rect = node.getBoundingClientRect();
+    hand.style.left = (rect.left + rect.width / 2 - 10) + 'px';
+    hand.style.top  = (rect.top + rect.height / 2 - 24) + 'px';
+    hand.style.opacity = '1';
+    setTimeout(() => { hand.style.transform = 'scale(0.75)'; }, 100);
+    setTimeout(() => { hand.style.transform = 'scale(1)'; }, 250);
+  }
+
+  setTimeout(() => {
+    demoInterval = setInterval(() => {
+      const node = nodes[demoI];
+      const m = members[demoI];
+      const rect = node.getBoundingClientRect();
+      moveHandToNode(node);
+      ttN.textContent = m.name;
+      ttA.textContent = m.num + ' · ' + m.animal;
+      tt.style.left = (rect.left + rect.width / 2 + 18) + 'px';
+      tt.style.top  = (rect.top + rect.height / 2 - 12) + 'px';
+      tt.style.opacity = '1';
+      demoI = (demoI + 1) % 12;
+    }, 800);
+  }, 2000);
+
+  document.querySelectorAll('.zodiac-node').forEach(node => {
+    node.addEventListener('mouseenter', () => {
+      clearInterval(demoInterval);
+      tt.style.opacity = '0';
+      hand.style.opacity = '0';
+    });
+  });
+  document.getElementById('logoContainer').addEventListener('touchstart', () => {
+    clearInterval(demoInterval);
+    tt.style.opacity = '0';
+    hand.style.opacity = '0';
+  });
   
 </script>
 </body>
