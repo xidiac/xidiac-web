@@ -283,19 +283,23 @@ footer{background:var(--bordeaux);padding:56px 60px;display:flex;align-items:cen
     </div>
     <div class="ov-body">
       <div class="ov-fields">
-        <div>
-          <div class="ov-field-label">Major</div>
-          <div class="ov-field-val">To be updated</div>
-        </div>
-        <div>
-          <div class="ov-field-label">Year</div>
-          <div class="ov-field-val">To be updated</div>
-        </div>
-        <div style="grid-column:1/-1">
-          <div class="ov-field-label">Career Interests</div>
-          <div class="ov-field-val">To be updated</div>
-        </div>
-      </div>
+         <div>
+           <div class="ov-field-label">Major</div>
+           <div class="ov-field-val" id="ovMajor"></div>
+         </div>
+         <div>
+           <div class="ov-field-label">Year</div>
+           <div class="ov-field-val" id="ovYear"></div>
+         </div>
+         <div style="grid-column:1/-1">
+           <div class="ov-field-label">Career Interests</div>
+           <div class="ov-field-val" id="ovInterests"></div>
+         </div>
+         <div style="grid-column:1/-1">
+           <div class="ov-field-label">Bio</div>
+           <div class="ov-field-val" id="ovBio" style="opacity:0.75;line-height:1.8;font-size:13px;"></div>
+         </div>
+       </div>
       <div id="ovVideoWrap" class="ov-video-wrap"></div>
     </div>
   </div>
@@ -314,18 +318,18 @@ if (sessionStorage.getItem('xidiac_unlocked') !== 'true') {
   window.location.href = 'index.html';
 }
 const members = [
-  {num:'01',name:'Eric Cho',animal:'Rat',video:'k_Nh95RjfgU'},
-  {num:'02',name:'Roman Young',animal:'Ox',video:'wffFvDsMsUU'},
-  {num:'03',name:'Aayush Sangani',animal:'Tiger',video:'YOUR_VIDEO_ID'},
-  {num:'04',name:'Vihan Shah',animal:'Rabbit',video:'YOUR_VIDEO_ID'},
-  {num:'05',name:'Ava Sam',animal:'Dragon',video:'YOUR_VIDEO_ID'},
-  {num:'06',name:'Doris Wu',animal:'Snake',video:'cZW-0qzIDak'},
-  {num:'07',name:'Haasika Yarlagadda',animal:'Horse',video:'bslz-jV0SsA'},
-  {num:'08',name:'Tanner Bradley',animal:'Goat',video:'J8LZyZ_iBfk'},
-  {num:'09',name:'Stephen Pham',animal:'Monkey',video:'jGR0rzvN2wo'},
-  {num:'10',name:'Mishka Raja',animal:'Rooster',video:'9KSxoNbyC20'},
-  {num:'11',name:'Sean An',animal:'Dog',video:'zJJ8-Jg1GZ0'},
-  {num:'12',name:'Kyler Khang',animal:'Pig',video:'YOUR_VIDEO_ID'},
+  {num:'01',name:'Eric Cho',animal:'Rat',video:'k_Nh95RjfgU',major:'Business Economics',year:'Third Year',interests:'Consulting, Product Management',bio:'Growing up in Diamond Bar, Eric developed an entrepreneurial mindset early on, launching his own meal-prep business, Macro Meals, and later managing supply chain operations at a distribution company where he coordinated across teams and oversaw accounts across 10+ retail chains. In his free time, he enjoys snowboarding, working out, and anything competitive.'},
+  {num:'02',name:'Roman Young',animal:'Ox',video:'wffFvDsMsUU',major:'Bioinformatics',year:'Second Year',interests:'Biotechnology, Healthcare Consulting',bio:'Roman previously pursued a pre-medical path with experience shadowing doctors at Kaiser and researching Immunology at the Salk Research Institute. He is now spearheading a project at the La Jolla Institute of Immunology building a tool to search query peptides against full proteomes. Outside of work, he enjoys thrifting, basketball, and food.'},
+  {num:'03',name:'Aayush Sangani',animal:'Tiger',video:'YOUR_VIDEO_ID',major:'Computer Engineering',year:'Second Year',interests:'Machine Learning, Chip Design',bio:'Aayush has worked at Key Business Solutions debugging AI chatbot applications and as a Database Administrator at the California Franchise Tax Board. This summer he will intern at Intel as a CPU Design Intern. He is also building a personal project optimizing ML inference on a Raspberry Pi. Outside of work, he enjoys volleyball, pool, cooking, and spending time with friends and family.'},
+  {num:'04',name:'Vihan Shah',animal:'Rabbit',video:'YOUR_VIDEO_ID',major:'Human Biology, Minor in Business & Finance',year:'Second Year',interests:'Oncology Strategy, Biotech Consulting',bio:'Vihan has contributed to cancer genomics research at MD Anderson and UCSF, and consulted for early-stage biotech firms including Wild Genomics and Simcha Therapeutics. This summer he will join Pfizer as an Oncology Commercial Strategy and Innovation Intern. He also leads operations at a student consulting firm and raised $30,000 as Finance Chair of UCSD\'s premier Bollywood dance team.'},
+  {num:'05',name:'Ava Sam',animal:'Dragon',video:'YOUR_VIDEO_ID',major:'Artificial Intelligence',year:'First Year',interests:'Software Engineering, Human-Centered Design',bio:'Ava founded her local chapter of Girls Who Code and has built projects in machine learning and web development, including a multi-class audio classification system that identifies music genres. She is currently developing an AI-driven app to help users plan hangouts with friends. In her free time she enjoys playing acoustic guitar, reading comics, and thrifting.'},
+  {num:'06',name:'Doris Wu',animal:'Snake',video:'cZW-0qzIDak',major:'International Business',year:'First Year',interests:'Hospitality, Human Resources',bio:'Doris has centered her experiences around leadership, collaboration, and creativity, mentoring people from diverse backgrounds and building strong interpersonal skills. Growing up in a diverse community shaped her perspective and inspired her to pursue people-focused roles. Outside of academics she enjoys listening to and creating music, trying new food spots, exploring the city, and spending time with the people who matter most.'},
+  {num:'07',name:'Haasika Yarlagadda',animal:'Horse',video:'bslz-jV0SsA',major:'Business Economics',year:'First Year',interests:'Finance, Consulting, Strategy',bio:'Originally from the Bay Area, Haasika served as Treasurer for her high school\'s American Cancer Society chapter, raising over $15,000. She is currently Fundraiser Chair for her sorority and tutors at Mathnasium, developing her ability to communicate across students, parents, and management. She is eager to build on this foundation through hands-on exposure to finance and consulting.'},
+  {num:'08',name:'Tanner Bradley',animal:'Goat',video:'J8LZyZ_iBfk',major:'Structural Engineering',year:'First Year',interests:'Engineering Consulting, Product Management',bio:'Tanner is involved in Students for the Exploration and Discovery of Space and Concrete Canoe, where he has developed skills in calculating load-bearing capacity and creating CAD models for rocket transportation. He hopes to combine his technical, communication, and business skills to break into engineering, consulting, or product management. Outside of school he enjoys music, volleyball, and spikeball on the beach.'},
+  {num:'09',name:'Stephen Pham',animal:'Monkey',video:'jGR0rzvN2wo',major:'Business Economics & Political Science',year:'First Year',interests:'Investment Banking, Private Equity',bio:'Stephen interned at Asian Law Alliance helping underprivileged individuals with immigration paperwork, where his biggest accomplishment was helping a client obtain asylum in the U.S. He is currently interning at Caprae Capital Partners as a Private Equity Intern, sourcing deals ranging from $50–100 million. He is also minoring in Finance. His personal passions include fashion and music.'},
+  {num:'10',name:'Mishka Raja',animal:'Rooster',video:'9KSxoNbyC20',major:'Economics & Philosophy',year:'First Year',interests:'AI Policy, Public Policy, Grassroots Activism',bio:'Originally from Washington, DC, Mishka worked as a judicial intern in DC Superior Court and as a congressional intern in the House of Representatives. Having moved to California, she has gained experience in the technology sector and shifted her focus toward AI policy. She hopes to continue working in policy-making and grassroots activism. Her hobbies include darkroom photography and watching new movies.'},
+  {num:'11',name:'Sean An',animal:'Dog',video:'zJJ8-Jg1GZ0',major:'Business Economics, Minor in Finance',year:'First Year',interests:'Investment Banking, Private Equity',bio:'Sean is currently interning at KCC Capital Partners managing the firm\'s CRM to coordinate communication with potential investors. He also works with the UCSD Hedge Fund Club as a Qualitative Analyst, researching Energy and Utility companies and developing investment theses. His goal is to break into middle-market investment banking and eventually transition into private equity.'},
+  {num:'12',name:'Kyler Khang',animal:'Pig',video:'YOUR_VIDEO_ID',major:'International Business',year:'First Year',interests:'Sales, Consulting',bio:'Kyler previously worked as a Sales Assistant maintaining Excel records, tracking pricing, and handling cold calling. He is currently building and expanding his own online resale business, which he hopes to grow into a larger established brand. He is open to exploring different areas of business and is interested in sales and consulting. Outside of school he enjoys basketball, spending time with friends, and trying new foods.'},
 ];
 
 // Render grid
@@ -351,6 +355,10 @@ function openOverlay(m) {
   document.getElementById('ovNum').textContent = m.num + ' · ' + m.animal.toUpperCase();
   document.getElementById('ovAnimal').textContent = m.animal;
   document.getElementById('ovName').textContent = m.name;
+  document.getElementById('ovMajor').textContent = m.major;
+  document.getElementById('ovYear').textContent = m.year;
+  document.getElementById('ovInterests').textContent = m.interests;
+  document.getElementById('ovBio').textContent = m.bio;
 
   const wrap = document.getElementById('ovVideoWrap');
   if (m.video && m.video !== 'YOUR_VIDEO_ID') {
