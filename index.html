@@ -871,6 +871,13 @@
    ];
  
    // ─── DEMO VARS (declared first so everything can use them) ───
+   // ─── TOOLTIP REFS (must be first) ───
+   const tt  = document.getElementById('tooltip');
+   const ttN = document.getElementById('ttN');
+   const ttA = document.getElementById('ttA');
+   const overlay = document.getElementById('overlay');
+
+   // ─── DEMO VARS ───
    const nodes = document.querySelectorAll('.zodiac-node');
    let demoI = 0;
    let demoInterval;
@@ -922,14 +929,9 @@
         moveHandToNode(node);
         demoI = (demoI + 1) % 12;
       }, 800);
-    }, 2000);
+    }, 3500);
   }
  
-   // ─── TOOLTIP REFS ───
-   const tt  = document.getElementById('tooltip');
-   const ttN = document.getElementById('ttN');
-   const ttA = document.getElementById('ttA');
-   const overlay = document.getElementById('overlay');
  
    // ─── SVG HOVER DETECTION ───
    document.querySelector('.logo-svg').addEventListener('mousemove', function(e) {
