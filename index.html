@@ -917,6 +917,9 @@
    }
  
    function startDemo() {
+    tt.style.left = '-200px';
+    tt.style.top = '-200px';
+    tt.style.opacity = '0';
     setTimeout(() => {
       if (userActive) return;
       demoInterval = setInterval(() => {
