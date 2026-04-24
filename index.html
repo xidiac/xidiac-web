@@ -897,16 +897,23 @@
      transform: scale(1);
      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
    `;
+   hand.style.left = '-100px';
+   hand.style.top = '-100px';
    document.body.appendChild(hand);
  
+   let handInitialized = false;
    function moveHandToNode(node) {
      if (userActive) return;
      const rect = node.getBoundingClientRect();
+     if (!handInitialized) {
+       hand.style.transition = 'opacity 0.3s, transform 0.15s';
+       handInitialized = true;
+     } else {
+       hand.style.transition = 'opacity 0.3s, transform 0.15s, left 0.4s cubic-bezier(0.25,0.46,0.45,0.94), top 0.4s cubic-bezier(0.25,0.46,0.45,0.94)';
+     }
      hand.style.left = (rect.left + rect.width / 2 - 10) + 'px';
      hand.style.top  = (rect.top + rect.height / 2 - 24) + 'px';
      hand.style.opacity = '1';
-     setTimeout(() => { if (!userActive) hand.style.transform = 'scale(0.75)'; }, 100);
-     setTimeout(() => { if (!userActive) hand.style.transform = 'scale(1)'; }, 250);
    }
  
    function startDemo() {
