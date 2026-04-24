@@ -903,23 +903,27 @@
    }
  
    function startDemo() {
-     setTimeout(() => {
-       if (userActive) return;
-       demoInterval = setInterval(() => {
-         if (userActive) { clearInterval(demoInterval); return; }
-         const node = nodes[demoI];
-         const m = members[demoI];
-         const rect = node.getBoundingClientRect();
-         moveHandToNode(node);
-         ttN.textContent = m.name;
-         ttA.textContent = m.num + ' · ' + m.animal;
-         tt.style.left = (rect.left + rect.width / 2 + 18) + 'px';
-         tt.style.top  = (rect.top + rect.height / 2 - 12) + 'px';
-         tt.style.opacity = '1';
-         demoI = (demoI + 1) % 12;
-       }, 800);
-     }, 5000);
-   }
+    setTimeout(() => {
+      if (userActive) return;
+      demoInterval = setInterval(() => {
+        if (userActive) { clearInterval(demoInterval); return; }
+        const node = nodes[demoI];
+        const m = members[demoI];
+        const rect = node.getBoundingClientRect();
+        if (rect.width === 0) return; // SVG not rendered yet, skip
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        // position tooltip and hand BEFORE showing them
+        tt.style.left = (cx + 18) + 'px';
+        tt.style.top  = (cy - 12) + 'px';
+        ttN.textContent = m.name;
+        ttA.textContent = m.num + ' · ' + m.animal;
+        tt.style.opacity = '1';
+        moveHandToNode(node);
+        demoI = (demoI + 1) % 12;
+      }, 800);
+    }, 2000);
+  }
  
    // ─── TOOLTIP REFS ───
    const tt  = document.getElementById('tooltip');
