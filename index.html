@@ -854,197 +854,202 @@
    </div>
  </div>
 
-<script>
- const members = [
-    {num:'01',name:'Eric Cho',animal:'RAT',video:'k_Nh95RjfgU',major:'Business Economics',year:'Third Year',interests:'Consulting, Product Management',bio:'Growing up in Diamond Bar, Eric developed an entrepreneurial mindset early on, launching his own meal-prep business, Macro Meals, and later managing supply chain operations at a distribution company where he coordinated across teams and oversaw accounts across 10+ retail chains. In his free time, he enjoys snowboarding, working out, and anything competitive.'},
-    {num:'02',name:'Roman Young',animal:'OX',video:'wffFvDsMsUU',major:'Bioinformatics, Minor in Computer Science',year:'Second Year',interests:'Biotechnology, Healthcare Consulting',bio:'Roman previously pursued a pre-medical path with experience shadowing doctors at Kaiser and researching Immunology at the Salk Research Institute. He is now spearheading a project at the La Jolla Institute of Immunology building a tool to search query peptides against full proteomes. Outside of work, he enjoys thrifting, basketball, and food.'},
-    {num:'03',name:'Aayush Sangani',animal:'TIGER',video:'tYl6O8lhxdI',major:'Computer Engineering',year:'Second Year',interests:'Machine Learning, Chip Design',bio:'Aayush has worked at Key Business Solutions debugging AI chatbot applications and as a Database Administrator at the California Franchise Tax Board. This summer he will intern at Intel as a CPU Design Intern. He is also building a personal project optimizing ML inference on a Raspberry Pi. Outside of work, he enjoys volleyball, pool, cooking, and spending time with friends and family.'},
-    {num:'04',name:'Vihan Shah',animal:'RABBIT',video:'EysAqz1VYBI',major:'Human Biology, Minor in Business & Finance',year:'Second Year',interests:'Oncology Strategy, Biotech Consulting',bio:'Vihan has contributed to cancer genomics research at MD Anderson and UCSF, and consulted for early-stage biotech firms including Wild Genomics and Simcha Therapeutics. This summer he will join Pfizer as an Oncology Commercial Strategy and Innovation Intern. He also leads operations at a student consulting firm and raised $30,000 as Finance Chair of UCSD\'s premier Bollywood dance team.'},
-    {num:'05',name:'Ava Sam',animal:'DRAGON',video:'6FmtQCdCPuM',major:'Artificial Intelligence',year:'First Year',interests:'Software Engineering, Human-Centered Design',bio:'Ava founded her local chapter of Girls Who Code and has built projects in machine learning and web development, including a multi-class audio classification system that identifies music genres. She is currently developing an AI-driven app to help users plan hangouts with friends. In her free time she enjoys playing acoustic guitar, reading comics, and thrifting.'},
-    {num:'06',name:'Doris Wu',animal:'SNAKE',video:'cZW-0qzIDak',major:'International Business',year:'First Year',interests:'Hospitality, Human Resources',bio:'Doris has centered her experiences around leadership, collaboration, and creativity, mentoring people from diverse backgrounds and building strong interpersonal skills. Growing up in a diverse community shaped her perspective and inspired her to pursue people-focused roles. Outside of academics she enjoys listening to and creating music, trying new food spots, exploring the city, and spending time with the people who matter most.'},
-    {num:'07',name:'Haasika Yarlagadda',animal:'HORSE',video:'bslz-jV0SsA',major:'Business Economics',year:'First Year',interests:'Finance, Consulting, Strategy',bio:'Originally from the Bay Area, Haasika served as Treasurer for her high school\'s American Cancer Society chapter, raising over $15,000. She is currently Fundraiser Chair for her sorority and tutors at Mathnasium, developing her ability to communicate across students, parents, and management. She is eager to build on this foundation through hands-on exposure to finance and consulting.'},
-    {num:'08',name:'Tanner Bradley',animal:'GOAT',video:'J8LZyZ_iBfk',major:'Structural Engineering',year:'First Year',interests:'Engineering Consulting, Product Management',bio:'Tanner is involved in Students for the Exploration and Discovery of Space and Concrete Canoe, where he has developed skills in calculating load-bearing capacity and creating CAD models for rocket transportation. He hopes to combine his technical, communication, and business skills to break into engineering, consulting, or product management. Outside of school he enjoys music, volleyball, and spikeball on the beach.'},
-    {num:'09',name:'Stephen Pham',animal:'MONKEY',video:'jGR0rzvN2wo',major:'Business Economics & Political Science, Minor in Finance',year:'First Year',interests:'Investment Banking, Private Equity',bio:'Stephen interned at Asian Law Alliance helping underprivileged individuals with immigration paperwork, where his biggest accomplishment was helping a client obtain asylum in the U.S. He is currently interning at Caprae Capital Partners as a Private Equity Intern, sourcing deals ranging from $50–100 million. His personal passions include fashion and music.'},
-    {num:'10',name:'Mishka Raja',animal:'ROOSTER',video:'9KSxoNbyC20',major:'Economics & Philosophy',year:'First Year',interests:'AI Policy, Public Policy, Grassroots Activism',bio:'Originally from Washington, DC, Mishka worked as a judicial intern in DC Superior Court and as a congressional intern in the House of Representatives. Having moved to California, she has shifted her focus toward AI policy and hopes to continue working in policy-making and grassroots activism. Her hobbies include darkroom photography and watching new movies.'},
-    {num:'11',name:'Sean An',animal:'DOG',video:'zJJ8-Jg1GZ0',major:'Business Economics, Minor in Finance',year:'First Year',interests:'Investment Banking, Private Equity',bio:'Sean is interning at KCC Capital Partners managing the firm\'s CRM to coordinate communication with potential investors. He also works with the UCSD Hedge Fund Club as a Qualitative Analyst, researching Energy and Utility companies and developing investment theses. His goal is to break into middle-market investment banking and eventually transition into private equity.'},
-    {num:'12',name:'Kyler Khang',animal:'PIG',video:'Mn_mMI_hfJ0',major:'International Business',year:'First Year',interests:'Sales, Consulting',bio:'Kyler previously worked as a Sales Assistant maintaining Excel records, tracking pricing, and handling cold calling. He is currently building and expanding his own online resale business, which he hopes to grow into a larger established brand. Outside of school he enjoys basketball, spending time with friends, and trying new foods.'},
-  ];
-
-  // ─── PASSWORD ───
-  const PASS = 'xidiac2026';
-  const gate = document.getElementById('gate');
-  const site = document.getElementById('site');
-  const pwInput = document.getElementById('pwInput');
-  const pwErr   = document.getElementById('pwErr');
-
-  function tryUnlock() {
-  if (pwInput.value.trim().toLowerCase() === PASS) {
-    sessionStorage.setItem('xidiac_unlocked', 'true');
-    gate.classList.add('unlocking');
-    setTimeout(() => {
-      gate.style.display = 'none';
-      site.classList.add('visible');
-      initReveal();
-    }, 820);
-    } else {
-      pwErr.classList.add('show');
-      pwInput.value = '';
-      pwInput.focus();
-      setTimeout(() => pwErr.classList.remove('show'), 2600);
-    }
-  }
-
-  document.getElementById('pwBtn').addEventListener('click', tryUnlock);
-  pwInput.addEventListener('keydown', e => e.key === 'Enter' && tryUnlock());
-
-  // ─── SCROLL REVEAL ───
-  function initReveal() {
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  }
-
- if (sessionStorage.getItem('xidiac_unlocked') === 'true') {
-    gate.style.display = 'none';
-    site.classList.add('visible');
-    initReveal();
-  } else {
-    gate.style.display = 'flex';
-  }
-
-  // ─── NODES ───
-  const tt    = document.getElementById('tooltip');
-  const ttN   = document.getElementById('ttN');
-  const ttA   = document.getElementById('ttA');
-  const overlay = document.getElementById('overlay');
-  const ovNum   = document.getElementById('ovNum');
-  const ovName  = document.getElementById('ovName');
-
-  document.querySelectorAll('.zodiac-node').forEach(node => {
-    const m = members[parseInt(node.dataset.i)];
-
-    node.addEventListener('mouseenter', () => {
-      userActive = true;
-      clearInterval(demoInterval);
-      hand.style.transition = 'none';
-      hand.style.opacity = '0';
-      ttN.textContent = m.name;
-      ttA.textContent = m.num + ' · ' + m.animal;
-      tt.style.opacity = '1';
-    });
-    node.addEventListener('mousemove', e => {
-      tt.style.left = (e.clientX + 18) + 'px';
-      tt.style.top  = (e.clientY - 12) + 'px';
-    });
-    node.addEventListener('mouseleave', () => tt.style.opacity = '0');
-    node.addEventListener('click', () => {
-      clearInterval(demoInterval);
-      hand.style.opacity = '0';
-      tt.style.opacity = '0';
-      document.getElementById('ovNum').textContent = m.num + ' · ' + m.animal;
-      document.getElementById('ovAnimal').textContent = m.animal;
-      document.getElementById('ovName').textContent = m.name;
-      document.getElementById('ovMajor').textContent = m.major;
-      document.getElementById('ovYear').textContent = m.year;
-      document.getElementById('ovInterests').textContent = m.interests;
-      document.getElementById('ovBio').textContent = m.bio;
-      const wrap = document.getElementById('ovVideoWrap');
-      if (m.video) {
-        wrap.className = 'ov-video-wrap has-video';
-        wrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${m.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-      } else {
-        wrap.className = 'ov-video-wrap';
-        wrap.innerHTML = `<div class="ov-video-placeholder"><div class="ov-video-label">60-SECOND INTRO VIDEO</div><div class="ov-video-sub">Coming soon</div></div>`;
-      }
-      overlay.classList.add('open');
-    });
-
-  });
-
-  document.getElementById('ovClose').addEventListener('click', () => overlay.classList.remove('open'));
-  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
-
-  const hamburger = document.getElementById('hamburger');
-  const navLinks  = document.getElementById('navLinks');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    navLinks.classList.toggle('open');
-  });
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      navLinks.classList.remove('open');
-    });
-  });
-
-  // ─── AUTO-DEMO TOOLTIP + CURSOR ───
-  const nodes = document.querySelectorAll('.zodiac-node');
-  let demoI = 0;
-  let demoInterval;
-  let userActive = false;
-
-  const hand = document.createElement('div');
-  hand.id = 'demoHand';
-  hand.innerHTML = `<svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 0 L0 20 L5 15 L9 24 L12 23 L8 14 L15 14 Z" fill="#F8F7F5" stroke="#C59540" stroke-width="1"/>
-  </svg>`;
-  hand.style.cssText = `
-    position: fixed;
-    pointer-events: none;
-    z-index: 600;
-    opacity: 0;
-    transition: opacity 0.3s, transform 0.15s, left 0.4s cubic-bezier(0.25,0.46,0.45,0.94), top 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
-    transform: scale(1);
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
-  `;
-  document.body.appendChild(hand);
-  document.querySelector('.logo-svg').addEventListener('mousemove', function(e) {
-  if (userActive) return;
-  const el = document.elementFromPoint(e.clientX, e.clientY);
-  if (!el) return;
-  const node = el.closest('.zodiac-node') || (el.classList.contains('nc') ? el.parentElement : null);
-  if (node) {
-    userActive = true;
-    clearInterval(demoInterval);
-    hand.style.transition = 'none';
-    hand.style.opacity = '0';
-    tt.style.opacity = '0';
-  }
-});
-
-  function moveHandToNode(node) {
-    if (userActive) return;
-    const rect = node.getBoundingClientRect();
-    hand.style.left = (rect.left + rect.width / 2 - 10) + 'px';
-    hand.style.top  = (rect.top + rect.height / 2 - 24) + 'px';
-    hand.style.opacity = '1';
-    setTimeout(() => { hand.style.transform = 'scale(0.75)'; }, 100);
-    setTimeout(() => { hand.style.transform = 'scale(1)'; }, 250);
-  }
-
-  setTimeout(() => {
-    demoInterval = setInterval(() => {
-      if (userActive) { clearInterval(demoInterval); return; }
-      const node = nodes[demoI];
-      const m = members[demoI];
-      const rect = node.getBoundingClientRect();
-      moveHandToNode(node);
-      ttN.textContent = m.name;
-      ttA.textContent = m.num + ' · ' + m.animal;
-      tt.style.left = (rect.left + rect.width / 2 + 18) + 'px';
-      tt.style.top  = (rect.top + rect.height / 2 - 12) + 'px';
-      tt.style.opacity = '1';
-      demoI = (demoI + 1) % 12;
-    }, 800);
-  }, 4000);
-
-  document.getElementById('logoContainer').addEventListener('touchstart', () => {
-    clearInterval(demoInterval);
-    tt.style.opacity = '0';
-    hand.style.opacity = '0';
-  });
-  
-</script>
+ <script>
+   const members = [
+     {num:'01',name:'Eric Cho',animal:'RAT',video:'k_Nh95RjfgU',major:'Business Economics',year:'Third Year',interests:'Consulting, Product Management',bio:'Growing up in Diamond Bar, Eric developed an entrepreneurial mindset early on, launching his own meal-prep business, Macro Meals, and later managing supply chain operations at a distribution company where he coordinated across teams and oversaw accounts across 10+ retail chains. In his free time, he enjoys snowboarding, working out, and anything competitive.'},
+     {num:'02',name:'Roman Young',animal:'OX',video:'wffFvDsMsUU',major:'Bioinformatics, Minor in Computer Science',year:'Second Year',interests:'Biotechnology, Healthcare Consulting',bio:'Roman previously pursued a pre-medical path with experience shadowing doctors at Kaiser and researching Immunology at the Salk Research Institute. He is now spearheading a project at the La Jolla Institute of Immunology building a tool to search query peptides against full proteomes. Outside of work, he enjoys thrifting, basketball, and food.'},
+     {num:'03',name:'Aayush Sangani',animal:'TIGER',video:'tYl6O8lhxdI',major:'Computer Engineering',year:'Second Year',interests:'Machine Learning, Chip Design',bio:'Aayush has worked at Key Business Solutions debugging AI chatbot applications and as a Database Administrator at the California Franchise Tax Board. This summer he will intern at Intel as a CPU Design Intern. He is also building a personal project optimizing ML inference on a Raspberry Pi. Outside of work, he enjoys volleyball, pool, cooking, and spending time with friends and family.'},
+     {num:'04',name:'Vihan Shah',animal:'RABBIT',video:'EysAqz1VYBI',major:'Human Biology, Minor in Business & Finance',year:'Second Year',interests:'Oncology Strategy, Biotech Consulting',bio:'Vihan has contributed to cancer genomics research at MD Anderson and UCSF, and consulted for early-stage biotech firms including Wild Genomics and Simcha Therapeutics. This summer he will join Pfizer as an Oncology Commercial Strategy and Innovation Intern. He also leads operations at a student consulting firm and raised $30,000 as Finance Chair of UCSD\'s premier Bollywood dance team.'},
+     {num:'05',name:'Ava Sam',animal:'DRAGON',video:'6FmtQCdCPuM',major:'Artificial Intelligence',year:'First Year',interests:'Software Engineering, Human-Centered Design',bio:'Ava founded her local chapter of Girls Who Code and has built projects in machine learning and web development, including a multi-class audio classification system that identifies music genres. She is currently developing an AI-driven app to help users plan hangouts with friends. In her free time she enjoys playing acoustic guitar, reading comics, and thrifting.'},
+     {num:'06',name:'Doris Wu',animal:'SNAKE',video:'cZW-0qzIDak',major:'International Business',year:'First Year',interests:'Hospitality, Human Resources',bio:'Doris has centered her experiences around leadership, collaboration, and creativity, mentoring people from diverse backgrounds and building strong interpersonal skills. Growing up in a diverse community shaped her perspective and inspired her to pursue people-focused roles. Outside of academics she enjoys listening to and creating music, trying new food spots, exploring the city, and spending time with the people who matter most.'},
+     {num:'07',name:'Haasika Yarlagadda',animal:'HORSE',video:'bslz-jV0SsA',major:'Business Economics',year:'First Year',interests:'Finance, Consulting, Strategy',bio:'Originally from the Bay Area, Haasika served as Treasurer for her high school\'s American Cancer Society chapter, raising over $15,000. She is currently Fundraiser Chair for her sorority and tutors at Mathnasium, developing her ability to communicate across students, parents, and management. She is eager to build on this foundation through hands-on exposure to finance and consulting.'},
+     {num:'08',name:'Tanner Bradley',animal:'GOAT',video:'J8LZyZ_iBfk',major:'Structural Engineering',year:'First Year',interests:'Engineering Consulting, Product Management',bio:'Tanner is involved in Students for the Exploration and Discovery of Space and Concrete Canoe, where he has developed skills in calculating load-bearing capacity and creating CAD models for rocket transportation. He hopes to combine his technical, communication, and business skills to break into engineering, consulting, or product management. Outside of school he enjoys music, volleyball, and spikeball on the beach.'},
+     {num:'09',name:'Stephen Pham',animal:'MONKEY',video:'jGR0rzvN2wo',major:'Business Economics & Political Science, Minor in Finance',year:'First Year',interests:'Investment Banking, Private Equity',bio:'Stephen interned at Asian Law Alliance helping underprivileged individuals with immigration paperwork, where his biggest accomplishment was helping a client obtain asylum in the U.S. He is currently interning at Caprae Capital Partners as a Private Equity Intern, sourcing deals ranging from $50–100 million. His personal passions include fashion and music.'},
+     {num:'10',name:'Mishka Raja',animal:'ROOSTER',video:'9KSxoNbyC20',major:'Economics & Philosophy',year:'First Year',interests:'AI Policy, Public Policy, Grassroots Activism',bio:'Originally from Washington, DC, Mishka worked as a judicial intern in DC Superior Court and as a congressional intern in the House of Representatives. Having moved to California, she has shifted her focus toward AI policy and hopes to continue working in policy-making and grassroots activism. Her hobbies include darkroom photography and watching new movies.'},
+     {num:'11',name:'Sean An',animal:'DOG',video:'zJJ8-Jg1GZ0',major:'Business Economics, Minor in Finance',year:'First Year',interests:'Investment Banking, Private Equity',bio:'Sean is interning at KCC Capital Partners managing the firm\'s CRM to coordinate communication with potential investors. He also works with the UCSD Hedge Fund Club as a Qualitative Analyst, researching Energy and Utility companies and developing investment theses. His goal is to break into middle-market investment banking and eventually transition into private equity.'},
+     {num:'12',name:'Kyler Khang',animal:'PIG',video:'Mn_mMI_hfJ0',major:'International Business',year:'First Year',interests:'Sales, Consulting',bio:'Kyler previously worked as a Sales Assistant maintaining Excel records, tracking pricing, and handling cold calling. He is currently building and expanding his own online resale business, which he hopes to grow into a larger established brand. Outside of school he enjoys basketball, spending time with friends, and trying new foods.'},
+   ];
+ 
+   // ─── DEMO VARS (declared first so everything can use them) ───
+   const nodes = document.querySelectorAll('.zodiac-node');
+   let demoI = 0;
+   let demoInterval;
+   let userActive = false;
+ 
+   const hand = document.createElement('div');
+   hand.id = 'demoHand';
+   hand.innerHTML = `<svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+     <path d="M0 0 L0 20 L5 15 L9 24 L12 23 L8 14 L15 14 Z" fill="#F8F7F5" stroke="#C59540" stroke-width="1"/>
+   </svg>`;
+   hand.style.cssText = `
+     position: fixed;
+     pointer-events: none;
+     z-index: 600;
+     opacity: 0;
+     transition: opacity 0.3s, transform 0.15s, left 0.4s cubic-bezier(0.25,0.46,0.45,0.94), top 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+     transform: scale(1);
+     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+   `;
+   document.body.appendChild(hand);
+ 
+   function moveHandToNode(node) {
+     if (userActive) return;
+     const rect = node.getBoundingClientRect();
+     hand.style.left = (rect.left + rect.width / 2 - 10) + 'px';
+     hand.style.top  = (rect.top + rect.height / 2 - 24) + 'px';
+     hand.style.opacity = '1';
+     setTimeout(() => { if (!userActive) hand.style.transform = 'scale(0.75)'; }, 100);
+     setTimeout(() => { if (!userActive) hand.style.transform = 'scale(1)'; }, 250);
+   }
+ 
+   function startDemo() {
+     setTimeout(() => {
+       if (userActive) return;
+       demoInterval = setInterval(() => {
+         if (userActive) { clearInterval(demoInterval); return; }
+         const node = nodes[demoI];
+         const m = members[demoI];
+         const rect = node.getBoundingClientRect();
+         moveHandToNode(node);
+         ttN.textContent = m.name;
+         ttA.textContent = m.num + ' · ' + m.animal;
+         tt.style.left = (rect.left + rect.width / 2 + 18) + 'px';
+         tt.style.top  = (rect.top + rect.height / 2 - 12) + 'px';
+         tt.style.opacity = '1';
+         demoI = (demoI + 1) % 12;
+       }, 800);
+     }, 5000);
+   }
+ 
+   // ─── TOOLTIP REFS ───
+   const tt  = document.getElementById('tooltip');
+   const ttN = document.getElementById('ttN');
+   const ttA = document.getElementById('ttA');
+   const overlay = document.getElementById('overlay');
+ 
+   // ─── SVG HOVER DETECTION ───
+   document.querySelector('.logo-svg').addEventListener('mousemove', function(e) {
+     if (userActive) return;
+     const el = document.elementFromPoint(e.clientX, e.clientY);
+     if (!el) return;
+     const node = el.closest('.zodiac-node') || (el.classList.contains('nc') ? el.parentElement : null);
+     if (node) {
+       userActive = true;
+       clearInterval(demoInterval);
+       hand.style.transition = 'none';
+       hand.style.opacity = '0';
+       tt.style.opacity = '0';
+     }
+   });
+ 
+   // ─── PASSWORD ───
+   const PASS = 'xidiac2026';
+   const gate = document.getElementById('gate');
+   const site = document.getElementById('site');
+   const pwInput = document.getElementById('pwInput');
+   const pwErr   = document.getElementById('pwErr');
+ 
+   function tryUnlock() {
+     if (pwInput.value.trim().toLowerCase() === PASS) {
+       sessionStorage.setItem('xidiac_unlocked', 'true');
+       gate.classList.add('unlocking');
+       setTimeout(() => {
+         gate.style.display = 'none';
+         site.classList.add('visible');
+         initReveal();
+         startDemo();
+       }, 820);
+     } else {
+       pwErr.classList.add('show');
+       pwInput.value = '';
+       pwInput.focus();
+       setTimeout(() => pwErr.classList.remove('show'), 2600);
+     }
+   }
+ 
+   document.getElementById('pwBtn').addEventListener('click', tryUnlock);
+   pwInput.addEventListener('keydown', e => e.key === 'Enter' && tryUnlock());
+ 
+   // ─── SCROLL REVEAL ───
+   function initReveal() {
+     const obs = new IntersectionObserver(entries => {
+       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+     }, { threshold: 0.12 });
+     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+   }
+ 
+   if (sessionStorage.getItem('xidiac_unlocked') === 'true') {
+     gate.style.display = 'none';
+     site.classList.add('visible');
+     initReveal();
+     startDemo();
+   } else {
+     gate.style.display = 'flex';
+   }
+ 
+   // ─── NODES ───
+   document.querySelectorAll('.zodiac-node').forEach(node => {
+     const m = members[parseInt(node.dataset.i)];
+ 
+     node.addEventListener('mouseenter', () => {
+       userActive = true;
+       clearInterval(demoInterval);
+       hand.style.transition = 'none';
+       hand.style.opacity = '0';
+       ttN.textContent = m.name;
+       ttA.textContent = m.num + ' · ' + m.animal;
+       tt.style.opacity = '1';
+     });
+     node.addEventListener('mousemove', e => {
+       tt.style.left = (e.clientX + 18) + 'px';
+       tt.style.top  = (e.clientY - 12) + 'px';
+     });
+     node.addEventListener('mouseleave', () => tt.style.opacity = '0');
+     node.addEventListener('click', () => {
+       clearInterval(demoInterval);
+       hand.style.opacity = '0';
+       tt.style.opacity = '0';
+       document.getElementById('ovNum').textContent = m.num + ' · ' + m.animal;
+       document.getElementById('ovAnimal').textContent = m.animal;
+       document.getElementById('ovName').textContent = m.name;
+       document.getElementById('ovMajor').textContent = m.major;
+       document.getElementById('ovYear').textContent = m.year;
+       document.getElementById('ovInterests').textContent = m.interests;
+       document.getElementById('ovBio').textContent = m.bio;
+       const wrap = document.getElementById('ovVideoWrap');
+       if (m.video) {
+         wrap.className = 'ov-video-wrap has-video';
+         wrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${m.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+       } else {
+         wrap.className = 'ov-video-wrap';
+         wrap.innerHTML = `<div class="ov-video-placeholder"><div class="ov-video-label">60-SECOND INTRO VIDEO</div><div class="ov-video-sub">Coming soon</div></div>`;
+       }
+       overlay.classList.add('open');
+     });
+   });
+ 
+   document.getElementById('ovClose').addEventListener('click', () => overlay.classList.remove('open'));
+   overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+ 
+   const hamburger = document.getElementById('hamburger');
+   const navLinks  = document.getElementById('navLinks');
+   hamburger.addEventListener('click', () => {
+     hamburger.classList.toggle('open');
+     navLinks.classList.toggle('open');
+   });
+   navLinks.querySelectorAll('a').forEach(link => {
+     link.addEventListener('click', () => {
+       hamburger.classList.remove('open');
+       navLinks.classList.remove('open');
+     });
+   });
+ 
+   document.getElementById('logoContainer').addEventListener('touchstart', () => {
+     userActive = true;
+     clearInterval(demoInterval);
+     tt.style.opacity = '0';
+     hand.style.opacity = '0';
+   });
+ </script>
 </body>
 </html>
