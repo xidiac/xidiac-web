@@ -977,6 +977,7 @@
    function tryUnlock() {
      if (pwInput.value.trim().toLowerCase() === PASS) {
        sessionStorage.setItem('xidiac_unlocked', 'true');
+       gtag('event', 'unlocked', { event_category: 'access', event_label: 'password_correct' });
        gate.classList.add('unlocking');
        setTimeout(() => {
          gate.style.display = 'none';
