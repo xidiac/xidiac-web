@@ -112,7 +112,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:24px 60px;display:fl
 .sp-divider{width:80px;height:1px;background:rgba(197,149,64,0.4);margin:36px 0;}
 .sp-intro{font-size:15px;line-height:1.9;color:rgba(233,227,213,0.6);max-width:560px;}
 
-.spotlight-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:64px;}
+.spotlight-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:64px;}
 .sp-card{background:var(--mid);border:1px solid rgba(197,149,64,0.07);padding:48px 40px;position:relative;overflow:hidden;opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease,background 0.3s;}
 .sp-card.in{opacity:1;transform:translateY(0);}
 .sp-card:hover{background:#252525;}
@@ -222,44 +222,88 @@ footer{background:var(--bordeaux);padding:56px 60px;display:flex;align-items:cen
     </div>
 
     <div class="spotlight-cards">
-      <div class="sp-card" style="transition-delay:0s">
-        <div class="sp-week">Launch Week · Apr 22</div>
+      <div class="sp-card" style="transition-delay:0s;cursor:pointer;" onclick="showSpotlight(1)">
+        <div class="sp-week">Week 1 · Apr 22</div>
         <div class="sp-status live">Live</div>
-        <h3 class="sp-card-title">Spotlight #1 — Introductions &amp; First Impressions</h3>
-        <p class="sp-card-desc">Meet the class. Bonding sessions and the first week of the program begin. Who are we, and what do we each bring to the table?</p>
+        <h3 class="sp-card-title">Spotlight #1 — Retreat Reflections</h3>
+        <p class="sp-card-desc">A weekend away from campus brought the class together. Twelve people. New dynamics. Honest conversations.</p>
         <div class="sp-date">April 22 – 25, 2026</div>
       </div>
-      <div class="sp-card" style="transition-delay:0.1s">
-         <div class="sp-week">Week 2 · Apr 26</div>
-         <div class="sp-status live">Live</div>
-         <h3 class="sp-card-title">Spotlight #2 — Retreat Reflections</h3>
-         <p class="sp-card-desc">A weekend away from campus brought the class together in a way that the first week couldn't. Twelve people. New dynamics. Honest conversations. Here's what we took away.</p>
- 
-         <!-- RETREAT PHOTOS — upload to photos/ folder in your repo -->
-         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:24px;">
-           <img src="photos/retreat1.jpg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
-           <img src="photos/retreat2.jpg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
-           <img src="photos/retreat3.jpg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
-           <img src="photos/retreat4.jpg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
-         </div>
- 
-         <!-- RETREAT REFLECTION -->
-         <div style="margin-top:24px;padding:20px;border-left:2px solid rgba(197,149,64,0.4);background:rgba(197,149,64,0.04);">
-           <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.3em;color:rgba(197,149,64,0.6);text-transform:uppercase;margin-bottom:8px;">Class Reflection</div>
-           <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:rgba(233,227,213,0.8);line-height:1.7;">
-             <!-- ADD RETREAT REFLECTION HERE -->
-             "Reflection coming soon."
-           </p>
-         </div>
- 
-         <div class="sp-date">April 26 – May 2, 2026</div>
-       </div>
-      <div class="sp-card" style="transition-delay:0.2s">
-        <div class="sp-week">Weeks 3–5</div>
-        <div class="sp-status upcoming">Coming</div>
-        <h3 class="sp-card-title">Spotlights #3, #4, #5</h3>
-        <p class="sp-card-desc">Career reflections, goals being worked toward, and class milestones documented as the five-week program unfolds.</p>
-        <div class="sp-date">May 3 – 23, 2026</div>
+      <div class="sp-card" style="transition-delay:0.1s;cursor:pointer;" onclick="showSpotlight(2)">
+        <div class="sp-week">Week 2 · Apr 26</div>
+        <div class="sp-status upcoming">Upcoming</div>
+        <h3 class="sp-card-title">Spotlight #2 — Coming Soon</h3>
+        <p class="sp-card-desc">Week 2 spotlight — check back soon.</p>
+        <div class="sp-date">April 26 – May 2, 2026</div>
+      </div>
+      <div class="sp-card" style="transition-delay:0.2s;cursor:pointer;" onclick="showSpotlight(3)">
+        <div class="sp-week">Week 3 · May 3</div>
+        <div class="sp-status upcoming">Upcoming</div>
+        <h3 class="sp-card-title">Spotlight #3 — Coming Soon</h3>
+        <p class="sp-card-desc">Week 3 spotlight — check back soon.</p>
+        <div class="sp-date">May 3 – 9, 2026</div>
+      </div>
+      <div class="sp-card" style="transition-delay:0.3s;cursor:pointer;" onclick="showSpotlight(4)">
+        <div class="sp-week">Week 4 · May 10</div>
+        <div class="sp-status upcoming">Upcoming</div>
+        <h3 class="sp-card-title">Spotlight #4 — Coming Soon</h3>
+        <p class="sp-card-desc">Week 4 spotlight — check back soon.</p>
+        <div class="sp-date">May 10 – 16, 2026</div>
+      </div>
+    </div>
+
+    <!-- SPOTLIGHT VIEWER -->
+    <div style="margin-top:64px;">
+      <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.5em;color:var(--bronze);text-transform:uppercase;margin-bottom:32px;">Select a Spotlight</div>
+
+      <!-- TAB BUTTONS -->
+      <div style="display:flex;gap:2px;margin-bottom:2px;flex-wrap:wrap;">
+        <button onclick="showSpotlight(1)" id="tab1" style="flex:1;min-width:120px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;padding:16px;background:var(--bordeaux);color:var(--linen);border:none;cursor:pointer;transition:background 0.3s;">Week 1 — Retreat</button>
+        <button onclick="showSpotlight(2)" id="tab2" style="flex:1;min-width:120px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;padding:16px;background:var(--mid);color:rgba(233,227,213,0.4);border:none;cursor:pointer;transition:background 0.3s;">Week 2</button>
+        <button onclick="showSpotlight(3)" id="tab3" style="flex:1;min-width:120px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;padding:16px;background:var(--mid);color:rgba(233,227,213,0.4);border:none;cursor:pointer;transition:background 0.3s;">Week 3</button>
+        <button onclick="showSpotlight(4)" id="tab4" style="flex:1;min-width:120px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;padding:16px;background:var(--mid);color:rgba(233,227,213,0.4);border:none;cursor:pointer;transition:background 0.3s;">Week 4</button>
+      </div>
+
+      <!-- SPOTLIGHT 1 — RETREAT -->
+      <div id="spotlight1" style="background:var(--mid);border:1px solid rgba(197,149,64,0.12);padding:56px;display:block;">
+        <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.4em;color:var(--bronze);text-transform:uppercase;margin-bottom:8px;">Week 1 · April 22</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--snow);margin-bottom:24px;">Retreat Reflections</h3>
+        <p style="font-size:15px;line-height:1.9;color:rgba(233,227,213,0.65);margin-bottom:36px;">A weekend away from campus brought the class together and celebrate the first week. Twelve people. New dynamics. Honest conversations.</p>
+        <!-- RETREAT PHOTOS — add images to photos/ folder in your repo -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:36px;">
+          <img src="img1.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
+          <img src="img2.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
+          <img src="img3.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
+          <img src="img4.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
+          <img src="img5.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
+          <img src="img6.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
+        </div>
+        <!-- REFLECTION -->
+        <div style="padding:28px 32px;border-left:2px solid rgba(197,149,64,0.4);background:rgba(197,149,64,0.04);">
+          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.3em;color:rgba(197,149,64,0.6);text-transform:uppercase;margin-bottom:12px;">Class Reflection</div>
+          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:rgba(233,227,213,0.8);line-height:1.75;">"Reflection coming soon."</p>
+        </div>
+      </div>
+
+      <!-- SPOTLIGHT 2 -->
+      <div id="spotlight2" style="background:var(--mid);border:1px solid rgba(197,149,64,0.12);padding:56px;display:none;">
+        <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.4em;color:var(--bronze);text-transform:uppercase;margin-bottom:8px;">Week 2 · April 26</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--snow);margin-bottom:24px;">Spotlight #2 — Coming Soon</h3>
+        <p style="font-size:15px;line-height:1.9;color:rgba(233,227,213,0.4);">This spotlight will be published the week of April 26.</p>
+      </div>
+
+      <!-- SPOTLIGHT 3 -->
+      <div id="spotlight3" style="background:var(--mid);border:1px solid rgba(197,149,64,0.12);padding:56px;display:none;">
+        <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.4em;color:var(--bronze);text-transform:uppercase;margin-bottom:8px;">Week 3 · May 3</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--snow);margin-bottom:24px;">Spotlight #3 — Coming Soon</h3>
+        <p style="font-size:15px;line-height:1.9;color:rgba(233,227,213,0.4);">This spotlight will be published the week of May 3.</p>
+      </div>
+
+      <!-- SPOTLIGHT 4 -->
+      <div id="spotlight4" style="background:var(--mid);border:1px solid rgba(197,149,64,0.12);padding:56px;display:none;">
+        <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.4em;color:var(--bronze);text-transform:uppercase;margin-bottom:8px;">Week 4 · May 10</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--snow);margin-bottom:24px;">Spotlight #4 — Coming Soon</h3>
+        <p style="font-size:15px;line-height:1.9;color:rgba(233,227,213,0.4);">This spotlight will be published the week of May 10.</p>
       </div>
     </div>
 
@@ -418,6 +462,19 @@ navLinks.querySelectorAll('a').forEach(link => {
     navLinks.classList.remove('open');
   });
 });
+function showSpotlight(n) {
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById('spotlight' + i).style.display = 'none';
+    const tab = document.getElementById('tab' + i);
+    tab.style.background = 'var(--mid)';
+    tab.style.color = 'rgba(233,227,213,0.4)';
+  }
+  document.getElementById('spotlight' + n).style.display = 'block';
+  document.getElementById('tab' + n).style.background = 'var(--bordeaux)';
+  document.getElementById('tab' + n).style.color = 'var(--linen)';
+  document.getElementById('spotlight' + n).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 </script>
 </body>
 </html>
