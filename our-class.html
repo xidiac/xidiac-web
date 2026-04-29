@@ -112,18 +112,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:24px 60px;display:fl
 .sp-divider{width:80px;height:1px;background:rgba(197,149,64,0.4);margin:36px 0;}
 .sp-intro{font-size:15px;line-height:1.9;color:rgba(233,227,213,0.6);max-width:560px;}
 
-.spotlight-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:64px;}
-.sp-card{background:var(--mid);border:1px solid rgba(197,149,64,0.07);padding:48px 40px;position:relative;overflow:hidden;opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease,background 0.3s;}
-.sp-card.in{opacity:1;transform:translateY(0);}
-.sp-card:hover{background:#252525;}
-.sp-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--bronze);transition:width 0.4s;}
-.sp-card:hover::after{width:100%;}
-.sp-week{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.35em;color:var(--bronze);text-transform:uppercase;margin-bottom:20px;}
-.sp-status{display:inline-block;font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.25em;border:1px solid;padding:4px 10px;margin-bottom:24px;}
-.sp-status.upcoming{color:rgba(197,149,64,0.5);border-color:rgba(197,149,64,0.2);}
-.sp-status.live{color:#4caf7d;border-color:rgba(76,175,125,0.3);}
-.sp-card-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--snow);line-height:1.35;margin-bottom:16px;}
-.sp-card-desc{font-size:13px;line-height:1.8;color:rgba(233,227,213,0.5);}
 .sp-date{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;color:rgba(197,149,64,0.4);margin-top:28px;}
 
 /* MILESTONES */
@@ -166,6 +154,20 @@ footer{background:var(--bordeaux);padding:56px 60px;display:flex;align-items:cen
   .ov-fields{grid-template-columns:1fr;}
   footer{flex-direction:column;gap:20px;text-align:center;} .footer-motto{text-align:center;}
 }
+
+/* SLIDESHOW */
+.slideshow { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; margin-bottom:36px; background:rgba(0,0,0,0.3); }
+.slide { position:absolute; inset:0; opacity:0; transition:opacity 0.6s ease; }
+.slide.active { opacity:1; }
+.slide img { width:100%; height:100%; object-fit:cover; }
+.slide-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(29,29,29,0.7); border:1px solid rgba(197,149,64,0.3); color:var(--bronze); font-size:18px; width:44px; height:44px; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10; transition:background 0.3s; }
+.slide-btn:hover { background:rgba(98,10,26,0.8); }
+.slide-btn.prev { left:16px; }
+.slide-btn.next { right:16px; }
+.slide-dots { position:absolute; bottom:16px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:10; }
+.slide-dot { width:6px; height:6px; border-radius:50%; background:rgba(197,149,64,0.3); border:none; cursor:pointer; transition:background 0.3s; padding:0; }
+.slide-dot.active { background:var(--bronze); }
+
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-32021ZTG4N"></script>
 <script>
@@ -221,37 +223,6 @@ footer{background:var(--bordeaux);padding:56px 60px;display:flex;align-items:cen
       <p class="sp-intro">Each week, we spotlight members of the class — sharing career reflections, lessons learned, and goals being pursued. The class story unfolds here, week by week.</p>
     </div>
 
-    <div class="spotlight-cards">
-      <div class="sp-card" style="transition-delay:0s;cursor:pointer;" onclick="showSpotlight(1)">
-        <div class="sp-week">Week 1 · Apr 22</div>
-        <div class="sp-status live">Live</div>
-        <h3 class="sp-card-title">Spotlight #1 — Retreat Reflections</h3>
-        <p class="sp-card-desc">A weekend away from campus brought the class together. Twelve people. New dynamics. Honest conversations.</p>
-        <div class="sp-date">April 22 – 25, 2026</div>
-      </div>
-      <div class="sp-card" style="transition-delay:0.1s;cursor:pointer;" onclick="showSpotlight(2)">
-        <div class="sp-week">Week 2 · Apr 26</div>
-        <div class="sp-status upcoming">Upcoming</div>
-        <h3 class="sp-card-title">Spotlight #2 — Coming Soon</h3>
-        <p class="sp-card-desc">Week 2 spotlight — check back soon.</p>
-        <div class="sp-date">April 26 – May 2, 2026</div>
-      </div>
-      <div class="sp-card" style="transition-delay:0.2s;cursor:pointer;" onclick="showSpotlight(3)">
-        <div class="sp-week">Week 3 · May 3</div>
-        <div class="sp-status upcoming">Upcoming</div>
-        <h3 class="sp-card-title">Spotlight #3 — Coming Soon</h3>
-        <p class="sp-card-desc">Week 3 spotlight — check back soon.</p>
-        <div class="sp-date">May 3 – 9, 2026</div>
-      </div>
-      <div class="sp-card" style="transition-delay:0.3s;cursor:pointer;" onclick="showSpotlight(4)">
-        <div class="sp-week">Week 4 · May 10</div>
-        <div class="sp-status upcoming">Upcoming</div>
-        <h3 class="sp-card-title">Spotlight #4 — Coming Soon</h3>
-        <p class="sp-card-desc">Week 4 spotlight — check back soon.</p>
-        <div class="sp-date">May 10 – 16, 2026</div>
-      </div>
-    </div>
-
     <!-- SPOTLIGHT VIEWER -->
     <div style="margin-top:64px;">
       <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.5em;color:var(--bronze);text-transform:uppercase;margin-bottom:32px;">Select a Spotlight</div>
@@ -270,14 +241,18 @@ footer{background:var(--bordeaux);padding:56px 60px;display:flex;align-items:cen
         <h3 style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--snow);margin-bottom:24px;">Retreat Reflections</h3>
         <p style="font-size:15px;line-height:1.9;color:rgba(233,227,213,0.65);margin-bottom:36px;">A weekend away from campus brought the class together and celebrate the first week. Twelve people. New dynamics. Honest conversations.</p>
         <!-- RETREAT PHOTOS — add images to photos/ folder in your repo -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:36px;">
-          <img src="img1.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
-          <img src="img2.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
-          <img src="img3.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
-          <img src="img4.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
-          <img src="img5.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
-          <img src="img6.jpeg" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(197,149,64,0.15);" alt="Retreat photo">
-        </div>
+         <!-- RETREAT SLIDESHOW -->
+         <div class="slideshow" id="retreat-slideshow">
+            <div class="slide active"><img src="photos/retreat/img1.jpeg" alt="Retreat photo"></div>
+            <div class="slide"><img src="photos/retreat/img2.jpeg" alt="Retreat photo"></div>
+            <div class="slide"><img src="photos/retreat/img3.jpeg" alt="Retreat photo"></div>
+            <div class="slide"><img src="photos/retreat/img4.jpeg" alt="Retreat photo"></div>
+            <div class="slide"><img src="photos/retreat/img5.jpeg" alt="Retreat photo"></div>
+            <div class="slide"><img src="photos/retreat/img6.jpeg" alt="Retreat photo"></div>
+            <button class="slide-btn prev" onclick="moveSlide('retreat-slideshow', -1)">&#8592;</button>
+            <button class="slide-btn next" onclick="moveSlide('retreat-slideshow', 1)">&#8594;</button>
+            <div class="slide-dots" id="retreat-slideshow-dots"></div>
+         </div>
         <!-- REFLECTION -->
         <div style="padding:28px 32px;border-left:2px solid rgba(197,149,64,0.4);background:rgba(197,149,64,0.04);">
           <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.3em;color:rgba(197,149,64,0.6);text-transform:uppercase;margin-bottom:12px;">Class Reflection</div>
@@ -449,7 +424,7 @@ document.getElementById('overlay').addEventListener('click', e => { if(e.target=
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
 }, {threshold:0.1});
-document.querySelectorAll('.reveal,.member-card,.sp-card').forEach(el => obs.observe(el));
+document.querySelectorAll('.reveal,.member-card').forEach(el => obs.observe(el));
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.getElementById('navLinks');
 hamburger.addEventListener('click', () => {
@@ -462,6 +437,36 @@ navLinks.querySelectorAll('a').forEach(link => {
     navLinks.classList.remove('open');
   });
 });
+// SLIDESHOW
+function initSlideshow(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const slides = el.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById(id + '-dots');
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(id, i);
+    dotsContainer.appendChild(dot);
+  });
+}
+function goToSlide(id, n) {
+  const el = document.getElementById(id);
+  const slides = el.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('#' + id + '-dots .slide-dot');
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+  const index = (n + slides.length) % slides.length;
+  slides[index].classList.add('active');
+  dots[index].classList.add('active');
+  el.dataset.current = index;
+}
+function moveSlide(id, dir) {
+  const el = document.getElementById(id);
+  const current = parseInt(el.dataset.current || 0);
+  goToSlide(id, current + dir);
+}
+initSlideshow('retreat-slideshow');
 function showSpotlight(n) {
   for (let i = 1; i <= 4; i++) {
     document.getElementById('spotlight' + i).style.display = 'none';
