@@ -371,7 +371,7 @@ footer{background:var(--carbon);padding:56px 60px;display:flex;align-items:cente
         <div class="tracker-bar" id="trackerBar"></div>
       </div>
       <div class="tracker-meta">
-        <span>$0 raised</span>
+         <span>$1,656 raised</span>
         <span>Goal: $6,000</span>
         <span>Updated weekly</span>
       </div>
@@ -479,7 +479,7 @@ document.querySelectorAll('.reveal,.pres-card').forEach(el => obs.observe(el));
 function animateBar() {
   const bar = document.getElementById('trackerBar');
   const pct = document.getElementById('pctDisplay');
-  const target = 0; // UPDATE THIS NUMBER (0-100) each week
+  const target = 28; // UPDATE THIS NUMBER (0-100) each week
   let current = 0;
   const step = () => {
     if(current < target) {
