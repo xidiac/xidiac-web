@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cycle — XIDIAC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --snow: #F8F7F5;
+  --linen: #E9E3D5;
+  --bronze: #C59540;
+  --red: #A31E21;
+  --bordeaux: #620A1A;
+  --carbon: #1D1D1D;
+  --mid: #2a2a2a;
+  --glow-bronze: rgba(197,149,64,0.6);
+  --glow-red: rgba(163,30,33,0.7);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--carbon);
+  color: var(--linen);
+  font-family: 'Libre Baskerville', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 20px 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(29,29,29,0.97), transparent);
+}
+.nav-logo { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 900; letter-spacing: 0.3em; color: var(--snow); text-decoration: none; }
+.nav-logo span { color: var(--bronze); }
+.nav-back { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(233,227,213,0.4); text-decoration: none; transition: color 0.3s; }
+.nav-back:hover { color: var(--bronze); }
+
+/* PAGE */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 24px 60px;
+  position: relative;
+}
+.page::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(98,10,26,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* NAME ENTRY */
+#nameScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.8s ease forwards;
+}
+.game-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 10px; letter-spacing: 0.5em;
+  color: var(--bronze); text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.game-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-style: italic;
+  font-size: clamp(52px, 10vw, 96px);
+  color: var(--snow); line-height: 1;
+  margin-bottom: 8px;
+}
+.game-sub {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.4em;
+  color: rgba(197,149,64,0.5);
+  text-transform: uppercase;
+  margin-bottom: 48px;
+}
+.divider { width: 60px; height: 1px; background: var(--bronze); margin-bottom: 48px; opacity: 0.5; }
+.name-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.4em;
+  color: var(--bronze); text-transform: uppercase;
+  margin-bottom: 16px; align-self: flex-start;
+}
+.name-input {
+  width: 320px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(197,149,64,0.4);
+  color: var(--snow);
+  font-family: 'Cinzel', serif;
+  font-size: 18px; letter-spacing: 0.3em;
+  padding: 12px 0;
+  outline: none;
+  text-align: center;
+  transition: border-color 0.3s;
+  margin-bottom: 32px;
+}
+.name-input:focus { border-bottom-color: var(--bronze); }
+.name-input::placeholder { color: rgba(233,227,213,0.15); letter-spacing: 0.2em; }
+.start-btn {
+  width: 320px;
+  background: var(--bordeaux);
+  border: none;
+  color: var(--linen);
+  font-family: 'Cinzel', serif;
+  font-size: 11px; letter-spacing: 0.4em;
+  text-transform: uppercase;
+  padding: 18px 32px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.15s;
+}
+.start-btn:hover { background: var(--red); transform: translateY(-1px); }
+
+.how-to {
+  margin-top: 40px;
+  text-align: center;
+  max-width: 380px;
+}
+.how-to p {
+  font-size: 13px;
+  line-height: 1.9;
+  color: rgba(233,227,213,0.35);
+  font-style: italic;
+}
+
+/* GAME SCREEN */
+#gameScreen { display: none; width: 100%; max-width: 700px; position: relative; z-index: 1; }
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+.game-player {
+  font-family: 'Cinzel', serif;
+  font-size: 10px; letter-spacing: 0.3em;
+  color: rgba(197,149,64,0.6);
+  text-transform: uppercase;
+}
+.game-player span { color: var(--snow); }
+.game-round {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300;
+  color: var(--snow); line-height: 1;
+  text-align: center;
+}
+.game-round-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8px; letter-spacing: 0.4em;
+  color: rgba(197,149,64,0.4);
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 4px;
+}
+.game-status {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.3em;
+  color: var(--bronze);
+  text-transform: uppercase;
+  text-align: right;
+  min-width: 100px;
+}
+
+/* STATUS BAR */
+.status-bar {
+  text-align: center;
+  margin-bottom: 28px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.status-msg {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: rgba(233,227,213,0.6);
+  transition: opacity 0.3s;
+}
+.status-msg.bronze { color: var(--bronze); }
+.status-msg.red { color: var(--red); }
+
+/* GRID */
+.animal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.animal-btn {
+  aspect-ratio: 1;
+  background: var(--mid);
+  border: 1px solid rgba(197,149,64,0.12);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.animal-btn:hover:not(:disabled) {
+  border-color: rgba(197,149,64,0.35);
+  background: #333;
+}
+.animal-btn:active:not(:disabled) { transform: scale(0.96); }
+.animal-btn:disabled { cursor: default; }
+
+.animal-emoji { font-size: clamp(24px, 4vw, 36px); line-height: 1; }
+.animal-name {
+  font-family: 'Cinzel', serif;
+  font-size: 7px; letter-spacing: 0.2em;
+  color: rgba(197,149,64,0.5);
+  text-transform: uppercase;
+}
+
+/* Flash states */
+.animal-btn.flash-active {
+  background: rgba(197,149,64,0.25);
+  border-color: var(--bronze);
+  box-shadow: 0 0 24px rgba(197,149,64,0.4), inset 0 0 20px rgba(197,149,64,0.1);
+}
+.animal-btn.flash-correct {
+  background: rgba(76,175,125,0.2);
+  border-color: #4caf7d;
+  box-shadow: 0 0 20px rgba(76,175,125,0.4);
+}
+.animal-btn.flash-wrong {
+  background: rgba(163,30,33,0.3);
+  border-color: var(--red);
+  box-shadow: 0 0 20px rgba(163,30,33,0.5);
+}
+
+/* PROGRESS DOTS */
+.progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(197,149,64,0.15);
+  border: 1px solid rgba(197,149,64,0.2);
+  transition: background 0.3s, border-color 0.3s;
+}
+.dot.done { background: var(--bronze); border-color: var(--bronze); }
+.dot.active { background: rgba(197,149,64,0.5); border-color: var(--bronze); animation: dotPulse 0.6s ease infinite; }
+
+@keyframes dotPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* GAME OVER */
+#gameOverScreen { display: none; text-align: center; position: relative; z-index: 1; animation: fadeUp 0.6s ease forwards; }
+.go-result {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-style: italic;
+  font-size: clamp(18px, 3vw, 26px);
+  color: rgba(233,227,213,0.5);
+  margin-bottom: 12px;
+}
+.go-score {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(64px, 12vw, 120px);
+  font-weight: 900;
+  color: var(--bronze);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.go-score-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px; letter-spacing: 0.4em;
+  color: rgba(197,149,64,0.4);
+  text-transform: uppercase;
+  margin-bottom: 48px;
+}
+.go-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 56px; }
+.go-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 10px; letter-spacing: 0.35em;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.15s;
+  border: none;
+}
+.go-btn.primary { background: var(--bordeaux); color: var(--linen); }
+.go-btn.primary:hover { background: var(--red); }
+.go-btn.secondary { background: transparent; color: var(--bronze); border: 1px solid rgba(197,149,64,0.3); }
+.go-btn.secondary:hover { background: rgba(197,149,64,0.08); }
+
+/* LEADERBOARD */
+.lb-title {
+  font-family: 'Cinzel', serif;
+  font-size: 10px; letter-spacing: 0.5em;
+  color: var(--bronze); text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.lb-list { width: 100%; max-width: 420px; margin: 0 auto; }
+.lb-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(197,149,64,0.08);
+  transition: background 0.2s;
+}
+.lb-item:first-child { border-top: 1px solid rgba(197,149,64,0.08); }
+.lb-item.you { background: rgba(197,149,64,0.06); }
+.lb-rank {
+  font-family: 'Cinzel', serif;
+  font-size: 10px; letter-spacing: 0.2em;
+  color: rgba(197,149,64,0.35);
+  width: 28px; flex-shrink: 0;
+}
+.lb-rank.gold { color: #FFD700; }
+.lb-rank.silver { color: #C0C0C0; }
+.lb-rank.bronze-rank { color: var(--bronze); }
+.lb-name {
+  font-family: 'Cinzel', serif;
+  font-size: 11px; letter-spacing: 0.15em;
+  color: var(--snow);
+  flex: 1;
+  text-transform: uppercase;
+}
+.lb-score {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600;
+  color: var(--bronze);
+}
+.lb-empty {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: rgba(233,227,213,0.2);
+  text-align: center;
+  padding: 24px;
+}
+
+/* STANDALONE LB PAGE */
+#lbScreen { display: none; text-align: center; position: relative; z-index: 1; width: 100%; max-width: 500px; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+/* HAMBURGER */
+.hamburger { display: none; }
+@media(max-width:600px) {
+  nav { padding: 18px 24px; }
+  .animal-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .name-input, .start-btn { width: 100%; max-width: 320px; }
+  .game-title { font-size: 56px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">XI<span>DIAC</span></a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="page">
+
+  <!-- NAME ENTRY -->
+  <div id="nameScreen">
+    <p class="game-eyebrow">Xi Class · Spring 2026</p>
+    <h1 class="game-title">The Cycle</h1>
+    <p class="game-sub">Sequence Memory · Zodiac Edition</p>
+    <div class="divider"></div>
+    <p class="name-label">Your Name</p>
+    <input type="text" class="name-input" id="nameInput" placeholder="Enter name" maxlength="20" autocomplete="off">
+    <button class="start-btn" id="startBtn">Begin the Cycle →</button>
+    <div class="how-to">
+      <p>Watch the sequence light up. Repeat it in order. Each round adds one more animal. How far can you go?</p>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="gameScreen">
+    <div class="game-header">
+      <div>
+        <div class="game-player">Playing as <span id="playerNameDisplay">—</span></div>
+      </div>
+      <div>
+        <div class="game-round" id="roundDisplay">1</div>
+        <div class="game-round-label">Round</div>
+      </div>
+      <div class="game-status" id="gameStatusText">Watch...</div>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-msg" id="statusMsg">Get ready...</div>
+    </div>
+
+    <div class="progress-dots" id="progressDots"></div>
+
+    <div class="animal-grid" id="animalGrid"></div>
+  </div>
+
+  <!-- GAME OVER -->
+  <div id="gameOverScreen">
+    <p class="go-result" id="goResult">You reached</p>
+    <div class="go-score" id="goScore">0</div>
+    <div class="go-score-label">Rounds Survived</div>
+    <div class="go-btns">
+      <button class="go-btn primary" id="playAgainBtn">Play Again →</button>
+      <button class="go-btn secondary" id="viewLbBtn">Leaderboard</button>
+    </div>
+    <div class="lb-title">Hall of the Cycle</div>
+    <div class="lb-list" id="goLbList"></div>
+  </div>
+
+  <!-- LEADERBOARD STANDALONE -->
+  <div id="lbScreen">
+    <p class="game-eyebrow" style="margin-bottom:16px;">Hall of the Cycle</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(36px,6vw,64px);color:var(--snow);margin-bottom:40px;">Leaderboard</h2>
+    <div class="lb-list" id="lbList" style="width:100%;max-width:500px;margin:0 auto 40px;"></div>
+    <button class="go-btn primary" id="lbPlayBtn">Play →</button>
+  </div>
+
+</div>
+
+<script>
+// ── STORAGE KEY ──
+const LB_KEY = 'xidiac_cycle_lb';
+
+const ANIMALS = [
+  { name: 'Rat',     emoji: '🐭' },
+  { name: 'Ox',      emoji: '🐂' },
+  { name: 'Tiger',   emoji: '🐯' },
+  { name: 'Rabbit',  emoji: '🐰' },
+  { name: 'Dragon',  emoji: '🐲' },
+  { name: 'Snake',   emoji: '🐍' },
+  { name: 'Horse',   emoji: '🐴' },
+  { name: 'Goat',    emoji: '🐐' },
+  { name: 'Monkey',  emoji: '🐒' },
+  { name: 'Rooster', emoji: '🐓' },
+  { name: 'Dog',     emoji: '🐕' },
+  { name: 'Pig',     emoji: '🐷' },
+];
+
+let playerName = '';
+let sequence = [];
+let playerInput = [];
+let round = 0;
+let isShowingSequence = false;
+let gameActive = false;
+
+// ── BUILD GRID ──
+function buildGrid() {
+  const grid = document.getElementById('animalGrid');
+  grid.innerHTML = '';
+  ANIMALS.forEach((a, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'animal-btn';
+    btn.dataset.i = i;
+    btn.innerHTML = `<span class="animal-emoji">${a.emoji}</span><span class="animal-name">${a.name}</span>`;
+    btn.addEventListener('click', () => onAnimalClick(i));
+    grid.appendChild(btn);
+  });
+}
+
+// ── LEADERBOARD ──
+async function getLeaderboard() {
+  try {
+    const result = await window.storage.get(LB_KEY, true);
+    return result ? JSON.parse(result.value) : [];
+  } catch { return []; }
+}
+
+async function saveScore(name, score) {
+  let lb = await getLeaderboard();
+  const existing = lb.findIndex(e => e.name.toLowerCase() === name.toLowerCase());
+  if (existing >= 0) {
+    if (score > lb[existing].score) lb[existing].score = score;
+  } else {
+    lb.push({ name, score });
+  }
+  lb.sort((a, b) => b.score - a.score);
+  lb = lb.slice(0, 10);
+  try { await window.storage.set(LB_KEY, JSON.stringify(lb), true); } catch {}
+  return lb;
+}
+
+async function renderLb(containerId, highlightName) {
+  const lb = await getLeaderboard();
+  const el = document.getElementById(containerId);
+  if (!lb.length) { el.innerHTML = '<div class="lb-empty">No scores yet — be the first.</div>'; return; }
+  const rankClass = (i) => i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze-rank' : '';
+  el.innerHTML = lb.map((e, i) => `
+    <div class="lb-item ${highlightName && e.name.toLowerCase() === highlightName.toLowerCase() ? 'you' : ''}">
+      <div class="lb-rank ${rankClass(i)}">${i === 0 ? '✦' : i === 1 ? '✧' : i === 2 ? '◆' : `${i+1}.`}</div>
+      <div class="lb-name">${e.name}</div>
+      <div class="lb-score">${e.score}</div>
+    </div>
+  `).join('');
+}
+
+// ── PROGRESS DOTS ──
+function renderDots() {
+  const container = document.getElementById('progressDots');
+  container.innerHTML = '';
+  sequence.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i < playerInput.length ? ' done' : i === playerInput.length && !isShowingSequence ? ' active' : '');
+    container.appendChild(dot);
+  });
+}
+
+// ── FLASH ANIMAL ──
+function flashAnimal(index, className, duration = 500) {
+  return new Promise(resolve => {
+    const btns = document.querySelectorAll('.animal-btn');
+    btns[index].classList.add(className);
+    setTimeout(() => { btns[index].classList.remove(className); resolve(); }, duration);
+  });
+}
+
+// ── SHOW SEQUENCE ──
+async function showSequence() {
+  isShowingSequence = true;
+  setButtons(true);
+  setStatus('Watch the sequence...', 'bronze');
+  document.getElementById('gameStatusText').textContent = 'Watch...';
+
+  await sleep(600);
+
+  for (let i = 0; i < sequence.length; i++) {
+    await flashAnimal(sequence[i], 'flash-active', 500);
+    await sleep(200 + Math.max(0, sequence.length - 5) * 20); // speeds up slightly
+  }
+
+  await sleep(300);
+  isShowingSequence = false;
+  setButtons(false);
+  playerInput = [];
+  renderDots();
+  setStatus('Your turn — repeat the sequence', '');
+  document.getElementById('gameStatusText').textContent = 'Your turn';
+}
+
+// ── ON CLICK ──
+async function onAnimalClick(index) {
+  if (isShowingSequence || !gameActive) return;
+
+  await flashAnimal(index, 'flash-active', 200);
+
+  playerInput.push(index);
+  renderDots();
+
+  const pos = playerInput.length - 1;
+
+  if (playerInput[pos] !== sequence[pos]) {
+    // WRONG
+    gameActive = false;
+    setButtons(true);
+    await flashAnimal(index, 'flash-wrong', 600);
+    setStatus('Wrong — the cycle is broken.', 'red');
+    await sleep(1000);
+    endGame();
+    return;
+  }
+
+  if (playerInput.length === sequence.length) {
+    // CORRECT FULL SEQUENCE
+    setButtons(true);
+    setStatus('Correct!', 'bronze');
+    await sleep(700);
+    nextRound();
+  }
+}
+
+// ── NEXT ROUND ──
+function nextRound() {
+  round++;
+  sequence.push(Math.floor(Math.random() * 12));
+  document.getElementById('roundDisplay').textContent = round;
+  renderDots();
+  showSequence();
+}
+
+// ── END GAME ──
+async function endGame() {
+  const score = round - 1;
+  document.getElementById('gameScreen').style.display = 'none';
+  document.getElementById('gameOverScreen').style.display = 'block';
+
+  document.getElementById('goScore').textContent = score;
+  document.getElementById('goResult').textContent = score >= 10 ? 'Legendary. You reached' : score >= 7 ? 'Impressive. You reached' : score >= 4 ? 'Not bad. You reached' : 'You reached';
+
+  await saveScore(playerName, score);
+  await renderLb('goLbList', playerName);
+}
+
+// ── START GAME ──
+function startGame(name) {
+  playerName = name;
+  sequence = [];
+  playerInput = [];
+  round = 0;
+  gameActive = true;
+
+  document.getElementById('playerNameDisplay').textContent = name.toUpperCase();
+  document.getElementById('nameScreen').style.display = 'none';
+  document.getElementById('gameOverScreen').style.display = 'none';
+  document.getElementById('lbScreen').style.display = 'none';
+  document.getElementById('gameScreen').style.display = 'block';
+
+  buildGrid();
+  nextRound();
+}
+
+// ── UTILS ──
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function setButtons(disabled) {
+  document.querySelectorAll('.animal-btn').forEach(b => b.disabled = disabled);
+}
+function setStatus(msg, cls) {
+  const el = document.getElementById('statusMsg');
+  el.textContent = msg;
+  el.className = 'status-msg' + (cls ? ' ' + cls : '');
+}
+
+// ── EVENT LISTENERS ──
+document.getElementById('startBtn').addEventListener('click', () => {
+  const name = document.getElementById('nameInput').value.trim();
+  if (!name) { document.getElementById('nameInput').focus(); return; }
+  startGame(name);
+});
+document.getElementById('nameInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('startBtn').click();
+});
+
+document.getElementById('playAgainBtn').addEventListener('click', () => {
+  document.getElementById('gameOverScreen').style.display = 'none';
+  startGame(playerName);
+});
+
+document.getElementById('viewLbBtn').addEventListener('click', async () => {
+  document.getElementById('gameOverScreen').style.display = 'none';
+  document.getElementById('lbScreen').style.display = 'block';
+  await renderLb('lbList', playerName);
+});
+
+document.getElementById('lbPlayBtn').addEventListener('click', () => {
+  document.getElementById('lbScreen').style.display = 'none';
+  document.getElementById('nameScreen').style.display = 'flex';
+  document.getElementById('nameInput').value = playerName;
+});
+
+// ── CHECK SESSION ──
+if (sessionStorage.getItem('xidiac_unlocked') !== 'true') {
+  window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>
