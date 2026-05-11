@@ -439,25 +439,30 @@ nav {
 
 <script>
 // ── STORAGE KEY ──
+const SUPABASE_URL = 'https://dnsfotjompdyifklmuko.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuc2ZvdGpvbXBkeWlma2xtdWtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0NjgwMjksImV4cCI6MjA5NDA0NDAyOX0.8qAGUizN2CLXV6gjGDwKC_v0IBZP8ZlhKL5BUEsLqIM';
+
 async function getLeaderboard() {
-  try {
-    const raw = localStorage.getItem('xidiac_cycle_lb');
-    return raw ? JSON.parse(raw) : [];
-  } catch { return []; }
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/cycle_scores?select=name,score&order=score.desc&limit=10`, {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+  });
+  return await res.json();
 }
 
 async function saveScore(name, score) {
-  let lb = await getLeaderboard();
-  const existing = lb.findIndex(e => e.name.toLowerCase() === name.toLowerCase());
-  if (existing >= 0) {
-    if (score > lb[existing].score) lb[existing].score = score;
-  } else {
-    lb.push({ name, score });
-  }
-  lb.sort((a, b) => b.score - a.score);
-  lb = lb.slice(0, 10);
-  localStorage.setItem('xidiac_cycle_lb', JSON.stringify(lb));
-  return lb;
+  const lb = await getLeaderboard();
+  const existing = lb.find(e => e.name.toLowerCase() === name.toLowerCase());
+  if (existing && score <= existing.score) return lb;
+  await fetch(`${SUPABASE_URL}/rest/v1/cycle_scores`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ name, score })
+  });
+  return await getLeaderboard();
 }
 
 const ANIMALS = [
