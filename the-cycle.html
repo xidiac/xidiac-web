@@ -439,7 +439,26 @@ nav {
 
 <script>
 // ── STORAGE KEY ──
-const LB_KEY = 'xidiac_cycle_lb';
+async function getLeaderboard() {
+  try {
+    const raw = localStorage.getItem('xidiac_cycle_lb');
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+async function saveScore(name, score) {
+  let lb = await getLeaderboard();
+  const existing = lb.findIndex(e => e.name.toLowerCase() === name.toLowerCase());
+  if (existing >= 0) {
+    if (score > lb[existing].score) lb[existing].score = score;
+  } else {
+    lb.push({ name, score });
+  }
+  lb.sort((a, b) => b.score - a.score);
+  lb = lb.slice(0, 10);
+  localStorage.setItem('xidiac_cycle_lb', JSON.stringify(lb));
+  return lb;
+}
 
 const ANIMALS = [
   { name: 'Rat',     emoji: '🐭' },
@@ -477,27 +496,6 @@ function buildGrid() {
   });
 }
 
-// ── LEADERBOARD ──
-async function getLeaderboard() {
-  try {
-    const result = await window.storage.get(LB_KEY, true);
-    return result ? JSON.parse(result.value) : [];
-  } catch { return []; }
-}
-
-async function saveScore(name, score) {
-  let lb = await getLeaderboard();
-  const existing = lb.findIndex(e => e.name.toLowerCase() === name.toLowerCase());
-  if (existing >= 0) {
-    if (score > lb[existing].score) lb[existing].score = score;
-  } else {
-    lb.push({ name, score });
-  }
-  lb.sort((a, b) => b.score - a.score);
-  lb = lb.slice(0, 10);
-  try { await window.storage.set(LB_KEY, JSON.stringify(lb), true); } catch {}
-  return lb;
-}
 
 async function renderLb(containerId, highlightName) {
   const lb = await getLeaderboard();
