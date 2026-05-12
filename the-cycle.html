@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-32021ZTG4N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-32021ZTG4N', {
+    'page_path': window.location.pathname
+  });
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Cycle — XIDIAC</title>
@@ -450,9 +459,14 @@ async function getLeaderboard() {
 }
 
 async function saveScore(name, score) {
-  const lb = await getLeaderboard();
-  const existing = lb.find(e => e.name.toLowerCase() === name.toLowerCase());
-  if (existing && score <= existing.score) return lb;
+  // Fetch existing entry for this specific name regardless of ranking
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/cycle_scores?select=name,score&name=ilike.${encodeURIComponent(name)}`, {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+  });
+  const existing = await res.json();
+
+  if (existing.length > 0 && score <= existing[0].score) return await getLeaderboard();
+
   await fetch(`${SUPABASE_URL}/rest/v1/cycle_scores?on_conflict=name`, {
     method: 'POST',
     headers: {
