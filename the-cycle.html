@@ -454,16 +454,16 @@ async function saveScore(name, score) {
   const existing = lb.find(e => e.name.toLowerCase() === name.toLowerCase());
   if (existing && score <= existing.score) return lb;
   await fetch(`${SUPABASE_URL}/rest/v1/cycle_scores`, {
-  method: 'POST',
-  headers: {
-    'apikey': SUPABASE_KEY,
-    'Authorization': `Bearer ${SUPABASE_KEY}`,
-    'Content-Type': 'application/json',
-    'Prefer': 'return=minimal'
-   },
-   body: JSON.stringify({ name, score })
-   });
-   return await getLeaderboard();
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates,return=minimal'
+    },
+    body: JSON.stringify({ name, score })
+  });
+  return await getLeaderboard();
 }
 
 const ANIMALS = [
