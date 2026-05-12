@@ -453,7 +453,7 @@ async function saveScore(name, score) {
   const lb = await getLeaderboard();
   const existing = lb.find(e => e.name.toLowerCase() === name.toLowerCase());
   if (existing && score <= existing.score) return lb;
-  await fetch(`${SUPABASE_URL}/rest/v1/cycle_scores`, {
+  await fetch(`${SUPABASE_URL}/rest/v1/cycle_scores?on_conflict=name`, {
     method: 'POST',
     headers: {
       'apikey': SUPABASE_KEY,
